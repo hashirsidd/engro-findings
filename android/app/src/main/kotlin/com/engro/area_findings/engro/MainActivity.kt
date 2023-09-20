@@ -1,4 +1,4 @@
-package com.engro.area_findings.engro
+package com.engro.area_findings
 
 import io.flutter.embedding.android.FlutterActivity
 

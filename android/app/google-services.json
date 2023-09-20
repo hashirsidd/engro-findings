@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1050037925080",
+    "project_id": "engro-findings",
+    "storage_bucket": "engro-findings.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050037925080:android:1a90d4df794ed79572d3ad",
+        "android_client_info": {
+          "package_name": "com.engro.area_findings"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAySyuLQhLIc6pajYTRbH0xr8RYj9tBUTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
