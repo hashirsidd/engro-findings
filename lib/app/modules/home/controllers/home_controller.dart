@@ -1,11 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  RxInt pageIndex = 0.obs;
 
-  final count = 0.obs;
+  final TextEditingController searchController = TextEditingController();
 
-
-
-  void increment() => count.value++;
 }

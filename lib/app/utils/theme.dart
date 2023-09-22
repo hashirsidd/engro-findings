@@ -10,6 +10,10 @@ class AppTheme {
     fontSize: 32,
   );
 
+
+  static const TextStyle bodySmall = TextStyle(
+    fontSize: 14,
+  );
   static const TextStyle bodyText = TextStyle(
     fontSize: 16,
   );
@@ -26,6 +30,7 @@ class AppTheme {
       textTheme: const TextTheme(
         bodyLarge: bodyLarge,
         bodyMedium:  bodyText,
+        bodySmall: bodySmall,
         titleLarge: headline1,
       ),
     );
