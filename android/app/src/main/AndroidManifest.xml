@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.engro.area_findings">
    <application
-        android:label="engro"
+        android:label="Findings"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

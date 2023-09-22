@@ -1,4 +1,4 @@
-name: engro
+name: Findings
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
@@ -9,7 +9,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get_cli: ^1.8.4
   get: 4.6.6
-#  flutter_native_splash: ^2.3.2
+  firebase_auth: ^4.10.0
 #  icons_launcher: ^2.1.3
 
   flutter: 
@@ -25,10 +25,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
-#
-#flutter_native_splash:
-#  background_image: "assets/splash.png"
-#
 #icons_launcher:
 #  image_path: "assets/logo.png"
 #  platforms:
