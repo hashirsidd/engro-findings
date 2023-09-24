@@ -12,6 +12,7 @@ dependencies:
   firebase_auth: ^4.10.0
   google_fonts: ^4.0.4
   font_awesome_flutter: ^10.5.0
+  syncfusion_flutter_charts: ^23.1.36
 #  icons_launcher: ^2.1.3
 
   flutter: 

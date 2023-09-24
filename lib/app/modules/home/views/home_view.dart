@@ -88,7 +88,9 @@ class HomeView extends GetView<HomeController> {
                                       HomeTabs(
                                         title: 'Overview\nDashboard',
                                         assetPath: 'assets/dashboard.png',
-                                        onTap: () {},
+                                        onTap: () {
+                                          Get.toNamed(Routes.DASHBOARD);
+                                        },
                                       ),
                                       HomeTabs(
                                         title: 'File Your\nFindings',

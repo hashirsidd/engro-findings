@@ -48,7 +48,7 @@ class SearchFindingsView extends GetView<SearchFindingsController> {
               Spacing.vExtraLarge,
               const Center(
                 child: Text(
-                  'SearchFindindsView is working',
+                  'Search Findings View is working',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
