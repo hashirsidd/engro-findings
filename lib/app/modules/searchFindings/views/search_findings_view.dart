@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:Findings/app/custom_widgets/widgets/appBar.dart';
 import 'package:Findings/app/modules/searchFindings/controllers/search_findings_controller.dart';
 
+import '../../../custom_widgets/widgets/findings_card.dart';
+
 class SearchFindingsView extends GetView<SearchFindingsController> {
   const SearchFindingsView({Key? key}) : super(key: key);
 
@@ -46,12 +48,10 @@ class SearchFindingsView extends GetView<SearchFindingsController> {
                 ],
               ),
               Spacing.vExtraLarge,
-              const Center(
-                child: Text(
-                  'Search Findings View is working',
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
+              const FindingsCard(),
+              const FindingsCard(),
+              const FindingsCard(),
+
             ],
           ),
         ),

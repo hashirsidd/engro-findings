@@ -25,7 +25,7 @@ class CustomStackedColumnChart extends StatelessWidget {
                 Expanded(
                   child: Stack(
                     children: [
-                      Column(
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           _backgroundLines(),
@@ -87,7 +87,7 @@ class CustomStackedColumnChart extends StatelessWidget {
           top: 92,
           left: 0,
           child: Text(
-            (controller.max.value / 2).toInt().toString(),
+            (controller.max.value ~/ 2).toString(),
             style: const TextStyle(color: Colors.grey),
           ),
         ),
@@ -147,7 +147,8 @@ class CustomStackedColumnChart extends StatelessWidget {
                       flex: values[0],
                       child: Container(
                         width: barWidth,
-                        color: Colors.black87, // Change color as needed
+                        color: const Color.fromRGBO(3, 75, 8, 1.0),
+                        // Change color as needed
                         child: Center(
                           child: Text(
                             values[0].toString(),
@@ -179,7 +180,7 @@ class CustomStackedColumnChart extends StatelessWidget {
             key.toUpperCase(),
             style: const TextStyle(
               fontSize: 11,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
           ),
@@ -199,8 +200,8 @@ class _backgroundLines extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 1,
-      color: Colors.grey,
-      margin: const EdgeInsets.only(left: 30),
+      color: Colors.grey[400],
+      margin: const EdgeInsets.only(left: 25),
     );
   }
 }
