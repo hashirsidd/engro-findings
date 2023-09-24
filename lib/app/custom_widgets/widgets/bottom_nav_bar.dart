@@ -1,7 +1,7 @@
 import 'package:Findings/app/modules/home/controllers/home_controller.dart';
+import 'package:Findings/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class BottomNavBar extends StatelessWidget {
   final HomeController controller;
@@ -18,6 +18,9 @@ class BottomNavBar extends StatelessWidget {
         currentIndex: controller.pageIndex.value,
         onTap: (index) {
           controller.pageIndex.value = index;
+          if(index==3){
+            Get.toNamed(Routes.SEARCH_FINDINGS);
+          }
         },
         elevation: 30,
         type: BottomNavigationBarType.fixed,
@@ -28,23 +31,15 @@ class BottomNavBar extends StatelessWidget {
         // Use shifting mode
         items: const [
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
+            icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.chartSimple),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.plus),
+            icon: Icon(Icons.add),
             label: 'Add',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.userLarge),
+            icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],

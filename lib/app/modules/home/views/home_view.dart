@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../../custom_widgets/widgets/bottom_nav_bar.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -13,7 +14,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavBar(
         controller: controller,
       ),
@@ -98,7 +98,9 @@ class HomeView extends GetView<HomeController> {
                                       HomeTabs(
                                         title: 'Site Wide\nFindings',
                                         assetPath: 'assets/siteSearch.png',
-                                        onTap: () {},
+                                        onTap: () {
+                                          Get.toNamed(Routes.SEARCH_FINDINGS);
+                                        },
                                       ),
                                       HomeTabs(
                                         title: 'Submitted\nFindings',
@@ -122,30 +124,40 @@ class HomeView extends GetView<HomeController> {
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: SearchBar(
-                              elevation: MaterialStateProperty.all(10),
-                              hintText: "Search findings",
-                              hintStyle: MaterialStateProperty.all<TextStyle>(
-                                  const TextStyle(color: Colors.grey)),
-                              textStyle: MaterialStateProperty.all<TextStyle>(
-                                  Theme.of(context).textTheme.bodyMedium!),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed(Routes.SEARCH_FINDINGS);
+                              },
+                              child: AbsorbPointer(
+                                absorbing: true,
+                                child: SearchBar(
+                                  elevation: MaterialStateProperty.all(10),
+                                  hintText: "Search findings",
+                                  hintStyle:
+                                      MaterialStateProperty.all<TextStyle>(
+                                          const TextStyle(color: Colors.grey)),
+                                  textStyle: MaterialStateProperty.all<
+                                          TextStyle>(
+                                      Theme.of(context).textTheme.bodyMedium!),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
+                                  trailing: [
+                                    IconButton(
+                                      icon: const FaIcon(
+                                        FontAwesomeIcons.magnifyingGlass,
+                                        color: Colors.black54,
+                                      ),
+                                      onPressed: () {
+                                        // Perform search here
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
-                              trailing: [
-                                IconButton(
-                                  icon: const FaIcon(
-                                    FontAwesomeIcons.magnifyingGlass,
-                                    color: Colors.black54,
-                                  ),
-                                  onPressed: () {
-                                    // Perform search here
-                                  },
-                                ),
-                              ],
                             ),
                           ),
                         ],
@@ -176,42 +188,47 @@ class HomeTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      width: double.infinity,
-      height: 150,
-      decoration: BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage('assets/iconbg.png'),
-            fit: BoxFit.cover,
-          ),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, 1.0),
-              blurRadius: 3.0,
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        width: double.infinity,
+        height: 150,
+        decoration: BoxDecoration(
+            image: const DecorationImage(
+              image: AssetImage('assets/iconbg.png'),
+              fit: BoxFit.cover,
             ),
-          ],
-          borderRadius: BorderRadius.circular(15)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-                color: Colors.white, fontSize: 26, fontWeight: FontWeight.w300),
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              Image.asset(
-                assetPath,
-                height: 60,
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0.0, 1.0),
+                blurRadius: 3.0,
               ),
             ],
-          )
-        ],
+            borderRadius: BorderRadius.circular(15)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w300),
+            ),
+            Row(
+              children: [
+                const Spacer(),
+                Image.asset(
+                  assetPath,
+                  height: 60,
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

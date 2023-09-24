@@ -22,8 +22,9 @@ void main() async {
         theme: AppTheme.lightTheme(),
         debugShowCheckedModeBanner: false,
         routingCallback: (value) {
-          SystemChrome.setSystemUIOverlayStyle(
-              const SystemUiOverlayStyle(statusBarColor: Colors.white,statusBarIconBrightness:Brightness.dark));
+          SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+              statusBarColor: Color.fromRGBO(250, 250, 250, 1),
+              statusBarIconBrightness: Brightness.dark));
         }),
   );
 }
