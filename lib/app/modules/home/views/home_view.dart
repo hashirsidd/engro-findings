@@ -1,12 +1,9 @@
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:get/get.dart';
-
-import '../../../custom_widgets/widgets/bottom_nav_bar.dart';
-import '../../../routes/app_pages.dart';
-import '../controllers/home_controller.dart';
+import 'package:Findings/app/routes/app_pages.dart';
+import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -14,9 +11,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(
-        controller: controller,
-      ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -27,9 +21,34 @@ class HomeView extends GetView<HomeController> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  'assets/engro.png',
-                  height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(
+                      'assets/engro.png',
+                      height: 50,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(color: Colors.green, width: 2)),
+                      clipBehavior: Clip.hardEdge,
+                      height: 45,
+                      width: 45,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        clipBehavior: Clip.hardEdge,
+                        height: 45,
+                        width: 45,
+                        child: Image.asset(
+                          'assets/user.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
               Spacing.vSmall,
@@ -95,7 +114,9 @@ class HomeView extends GetView<HomeController> {
                                       HomeTabs(
                                         title: 'File Your\nFindings',
                                         assetPath: 'assets/fileFindings.png',
-                                        onTap: () {},
+                                        onTap: () {
+                                          Get.toNamed(Routes.FILE_FINDINGS);
+                                        },
                                       ),
                                       HomeTabs(
                                         title: 'Site Wide\nFindings',
