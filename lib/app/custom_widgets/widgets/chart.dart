@@ -28,9 +28,9 @@ class CustomStackedColumnChart extends StatelessWidget {
                       const Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _backgroundLines(),
-                          _backgroundLines(),
-                          _backgroundLines(),
+                          _BackgroundLines(),
+                          _BackgroundLines(),
+                          _BackgroundLines(),
                         ],
                       ),
                       Row(
@@ -191,8 +191,8 @@ class CustomStackedColumnChart extends StatelessWidget {
   }
 }
 
-class _backgroundLines extends StatelessWidget {
-  const _backgroundLines({
+class _BackgroundLines extends StatelessWidget {
+  const _BackgroundLines({
     Key? key,
   }) : super(key: key);
 

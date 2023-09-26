@@ -123,7 +123,7 @@ class FindingsCard extends StatelessWidget {
                 ),
               )
             ],
-          )
+          ),
         ],
       ),
     );

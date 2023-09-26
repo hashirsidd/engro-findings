@@ -8,6 +8,7 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const SEARCH_FINDINGS = _Paths.SEARCH_FINDINGS;
   static const DASHBOARD = _Paths.DASHBOARD;
+  static const FILE_FINDINGS = _Paths.FILE_FINDINGS;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const SEARCH_FINDINGS = '/search-findings';
   static const DASHBOARD = '/dashboard';
+  static const FILE_FINDINGS = '/file-findings';
 }
