@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../custom_widgets/widgets/findings_card.dart';
-import '../controllers/submitted_findings_controller.dart';
+import 'package:Findings/app/custom_widgets/widgets/findings_card.dart';
+import 'package:Findings/app/modules/submittedFindings/controllers/submitted_findings_controller.dart';
 
 class SubmittedFindingsView extends GetView<SubmittedFindingsController> {
   const SubmittedFindingsView({Key? key}) : super(key: key);

@@ -16,6 +16,15 @@ class FileFindingsController extends GetxController {
   TextEditingController areaGlController = TextEditingController();
   TextEditingController createdByController = TextEditingController();
 
+  FocusNode findingFocus = FocusNode();
+  FocusNode equipmentDescriptionFocus = FocusNode();
+  FocusNode equipmentTagFocus = FocusNode();
+  FocusNode problemFocus = FocusNode();
+  FocusNode solutionFocus = FocusNode();
+  FocusNode preventionFocus = FocusNode();
+  FocusNode areaGlFocus = FocusNode();
+
+
   String buttonText = 'Submit';
   RxString area = ''.obs;
   RxString category = ''.obs;

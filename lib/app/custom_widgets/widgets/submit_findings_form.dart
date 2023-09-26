@@ -2,6 +2,7 @@ import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../../modules/fileFindings/controllers/file_findings_controller.dart';
 import 'drop_down.dart';
 import 'findings_text_field.dart';
 
@@ -28,6 +29,7 @@ class SubmitFindingsForm extends StatelessWidget {
           title: 'Title',
           hint: 'Title of finding',
           maxLines: 1,
+          nextFocus: controller.equipmentTagFocus,
         ),
         Row(
           children: [
@@ -86,6 +88,8 @@ class SubmitFindingsForm extends StatelessWidget {
                 textEditingController: controller.equipmentTagController,
                 title: 'Equipment Tag',
                 hint: 'Tag',
+                currentFocus: controller.equipmentTagFocus,
+                nextFocus: controller.equipmentDescriptionFocus,
                 maxLines: 1,
               ),
             ),
@@ -95,26 +99,36 @@ class SubmitFindingsForm extends StatelessWidget {
           textEditingController: controller.equipmentDescriptionController,
           title: 'Equipment Description',
           hint: 'Description of equipment',
+          currentFocus: controller.equipmentDescriptionFocus,
+          nextFocus: controller.problemFocus,
         ),
         FindingsTextField(
           textEditingController: controller.problemController,
           title: 'Problem Statement',
           hint: 'Explain what happened?',
+          currentFocus: controller.problemFocus,
+          nextFocus: controller.findingFocus,
         ),
         FindingsTextField(
           textEditingController: controller.findingController,
           title: 'Key Finding',
           hint: 'Why it happened?',
+          currentFocus: controller.findingFocus,
+          nextFocus: controller.solutionFocus,
         ),
         FindingsTextField(
           textEditingController: controller.solutionController,
           title: 'Solution',
           hint: 'How was it solved?',
+          currentFocus: controller.solutionFocus,
+          nextFocus: controller.preventionFocus,
         ),
         FindingsTextField(
           textEditingController: controller.preventionController,
           title: 'Prevention',
           hint: 'How to avoid it in future?',
+          currentFocus: controller.preventionFocus,
+          nextFocus: controller.areaGlFocus,
         ),
         Row(
           children: [
@@ -124,6 +138,7 @@ class SubmitFindingsForm extends StatelessWidget {
                 title: 'Area GL',
                 hint: 'Area GL',
                 maxLines: 1,
+                currentFocus: controller.areaGlFocus,
               ),
             ),
             Spacing.hMedium,

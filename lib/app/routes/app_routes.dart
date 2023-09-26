@@ -12,6 +12,8 @@ abstract class Routes {
   static const FILE_FINDINGS = _Paths.FILE_FINDINGS;
   static const SUBMITTED_FINDINGS = _Paths.SUBMITTED_FINDINGS;
   static const EDIT_SUBMITTED_FINDINGS = _Paths.EDIT_SUBMITTED_FINDINGS;
+  static const CREATE_USERS = _Paths.CREATE_USERS;
+  static const FINDINGS_APPROVAL = _Paths.FINDINGS_APPROVAL;
 }
 
 abstract class _Paths {
@@ -25,4 +27,6 @@ abstract class _Paths {
   static const FILE_FINDINGS = '/file-findings';
   static const SUBMITTED_FINDINGS = '/submitted-findings';
   static const EDIT_SUBMITTED_FINDINGS = '/edit-submitted-findings';
+  static const CREATE_USERS = '/create-users';
+  static const FINDINGS_APPROVAL = '/findings-approval';
 }

@@ -7,14 +7,18 @@ class FindingsTextField extends StatelessWidget {
   final String hint;
   final int maxLines;
   final bool enabled;
+  final FocusNode? nextFocus;
+  final FocusNode? currentFocus;
 
   const FindingsTextField({
     Key? key,
     required this.textEditingController,
     required this.title,
     required this.hint,
+    this.nextFocus,
     this.maxLines = 10,
     this.enabled = true,
+    this.currentFocus,
   }) : super(key: key);
 
   @override
@@ -42,12 +46,19 @@ class FindingsTextField extends StatelessWidget {
                 ],
                 border: Border.all(color: Colors.black12),
                 borderRadius: BorderRadius.circular(10)),
-            child: TextField(
+            child: TextFormField(
               scrollPhysics: const BouncingScrollPhysics(),
               minLines: 1,
               maxLines: maxLines,
               enabled: enabled,
               controller: textEditingController,
+              focusNode: currentFocus,
+              textInputAction: nextFocus != null
+                  ? TextInputAction.next
+                  : TextInputAction.done,
+              onFieldSubmitted: (_) => nextFocus != null
+                  ? FocusScope.of(context).requestFocus(nextFocus)
+                  : FocusScope.of(context).unfocus(),
               style: const TextStyle(color: Colors.black87),
               decoration: InputDecoration(
                 border: InputBorder.none,
