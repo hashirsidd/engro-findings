@@ -1,15 +1,30 @@
+import 'package:Findings/app/routes/app_pages.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../modules/submittedFindings/views/edit_submitted_findings_view.dart';
+
+enum Status {
+  inReview,
+  rejected,
+  accepted,
+}
 
 class FindingsCard extends StatelessWidget {
+  final Status status;
+  final bool showStatus;
+
   const FindingsCard({
     Key? key,
+    this.showStatus = false,
+    this.status = Status.accepted,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(15),
       width: double.infinity,
@@ -56,8 +71,7 @@ class FindingsCard extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 color: Colors.black54),
           ),
-          Spacing.vStandard,
-          const Spacer(),
+          Spacing.vExtraLarge,
           Row(
             children: [
               Expanded(
@@ -124,6 +138,45 @@ class FindingsCard extends StatelessWidget {
               )
             ],
           ),
+          if (showStatus) ...[
+            Spacing.vLarge,
+            Row(
+              children: [
+                const Text(
+                  'Status :',
+                  overflow: TextOverflow.clip,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black54,
+                  ),
+                ),
+                Text(
+                  ' ${status.name.toUpperCase()}',
+                  overflow: TextOverflow.clip,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: status == Status.accepted
+                        ? Colors.green
+                        : status == Status.rejected
+                            ? Colors.red
+                            : Colors.black45,
+                  ),
+                ),
+                const Spacer(),
+                if (status == Status.inReview)
+                  GestureDetector(
+                    onTap: () => Get.toNamed(Routes.EDIT_SUBMITTED_FINDINGS),
+                    child: const Icon(
+                      Icons.edit_outlined,
+                    ),
+                  )
+              ],
+            ),
+          ]
         ],
       ),
     );

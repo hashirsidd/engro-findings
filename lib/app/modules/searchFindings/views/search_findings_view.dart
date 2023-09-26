@@ -20,7 +20,8 @@ class SearchFindingsView extends GetView<SearchFindingsController> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
+          child: ListView(
+            shrinkWrap: true,
             children: [
               SearchBar(
                 elevation: MaterialStateProperty.all(5),

@@ -1,3 +1,4 @@
+import 'package:Findings/app/modules/submittedFindings/views/edit_submitted_findings_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/dashboard/bindings/dashboard_binding.dart';
@@ -12,6 +13,8 @@ import '../modules/searchFindings/bindings/search_findings_binding.dart';
 import '../modules/searchFindings/views/search_findings_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/submittedFindings/bindings/submitted_findings_binding.dart';
+import '../modules/submittedFindings/views/submitted_findings_view.dart';
 
 part 'app_routes.dart';
 
@@ -50,6 +53,16 @@ class AppPages {
       name: _Paths.FILE_FINDINGS,
       page: () => const FileFindingsView(),
       binding: FileFindingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUBMITTED_FINDINGS,
+      page: () => const SubmittedFindingsView(),
+      binding: SubmittedFindingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_SUBMITTED_FINDINGS,
+      page: () => EditSubmittedFindingsView(),
+      binding: SubmittedFindingsBinding(),
     ),
   ];
 }

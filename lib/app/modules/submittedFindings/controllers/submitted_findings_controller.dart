@@ -1,10 +1,10 @@
-import 'package:Findings/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../custom_widgets/dialogs/submit_dialog.dart';
+import '../../../routes/app_pages.dart';
 
-class FileFindingsController extends GetxController {
+class SubmittedFindingsController extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController findingController = TextEditingController();
   TextEditingController equipmentDescriptionController =
@@ -16,11 +16,10 @@ class FileFindingsController extends GetxController {
   TextEditingController areaGlController = TextEditingController();
   TextEditingController createdByController = TextEditingController();
 
-  String buttonText = 'Submit';
+  String buttonText = 'Save';
   RxString area = ''.obs;
   RxString category = ''.obs;
   RxString date = ''.obs;
-
   onPressSubmit() {
     Get.offAllNamed(Routes.HOME);
     Get.dialog(
@@ -53,3 +52,5 @@ class FileFindingsController extends GetxController {
     super.onClose();
   }
 }
+
+

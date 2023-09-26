@@ -16,6 +16,7 @@ class HomeView extends GetView<HomeController> {
           FocusScope.of(context).unfocus();
         },
         child: SafeArea(
+          bottom: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -94,7 +95,7 @@ class HomeView extends GetView<HomeController> {
                               Expanded(
                                 child: GridView.count(
                                     padding: const EdgeInsets.only(
-                                        left: 20.0, right: 20, top: 50),
+                                        left: 20.0, right: 20, top: 50,bottom: 60),
                                     shrinkWrap: true,
                                     physics: const BouncingScrollPhysics(),
                                     crossAxisCount:
@@ -128,7 +129,7 @@ class HomeView extends GetView<HomeController> {
                                       HomeTabs(
                                         title: 'Submitted\nFindings',
                                         assetPath: 'assets/yourFindings.png',
-                                        onTap: () {},
+                                        onTap: ()=>Get.toNamed(Routes.SUBMITTED_FINDINGS),
                                       ),
                                       HomeTabs(
                                         title: 'Create\nUsers',
@@ -140,6 +141,7 @@ class HomeView extends GetView<HomeController> {
                                         assetPath: 'assets/approvals.png',
                                         onTap: () {},
                                       ),
+
                                     ]),
                               ),
                             ],
