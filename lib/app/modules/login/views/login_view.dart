@@ -40,7 +40,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   const SizedBox(height: 10),
                   GestureDetector(
-                    onTap:()=> controller.onTapForgotPassword(context),
+                    onTap: () => controller.onTapForgotPassword(context),
                     child: Row(
                       children: [
                         const Spacer(),
@@ -56,7 +56,9 @@ class LoginView extends GetView<LoginController> {
                   ),
                   const SizedBox(height: 20),
                   Obx(() => controller.isLoading.value
-                      ? const CircularProgressIndicator()
+                      ? const CircularProgressIndicator(
+                          color: Colors.green,
+                        )
                       : SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(

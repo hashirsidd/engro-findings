@@ -29,23 +29,28 @@ class HomeView extends GetView<HomeController> {
                       'assets/engro.png',
                       height: 50,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(color: Colors.green, width: 2)),
-                      clipBehavior: Clip.hardEdge,
-                      height: 45,
-                      width: 45,
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(Routes.PROFILE);
+                      },
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(color: Colors.green, width: 2)),
                         clipBehavior: Clip.hardEdge,
                         height: 45,
                         width: 45,
-                        child: Image.asset(
-                          'assets/user.png',
-                          fit: BoxFit.cover,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          clipBehavior: Clip.hardEdge,
+                          height: 45,
+                          width: 45,
+                          child: Image.asset(
+                            'assets/user.png',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     )
