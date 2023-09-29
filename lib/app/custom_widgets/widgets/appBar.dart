@@ -12,19 +12,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
+      backgroundColor: Colors.green,
+      //Color.fromRGBO(250, 250, 250, 1),
       elevation: 0,
       leading: GestureDetector(
         onTap: () => Get.back(),
         child: const Icon(
           Icons.arrow_back,
-          color: Colors.black54,
+          color: Colors.white, //black54,
         ),
       ),
       title: Text(
         title,
         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Colors.black54, fontSize: 20, fontWeight: FontWeight.w500),
+              color: Colors.white, //black54
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
       ),
       centerTitle: true,
     );
