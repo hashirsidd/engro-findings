@@ -1,11 +1,11 @@
+import 'package:Findings/app/modules/searchFindings/views/findings_details_view.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:Findings/app/custom_widgets/widgets/appBar.dart';
 import 'package:Findings/app/modules/searchFindings/controllers/search_findings_controller.dart';
-
-import '../../../custom_widgets/widgets/findings_card.dart';
+import 'package:Findings/app/custom_widgets/widgets/findings_card.dart';
 
 class SearchFindingsView extends GetView<SearchFindingsController> {
   const SearchFindingsView({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class SearchFindingsView extends GetView<SearchFindingsController> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
           child: ListView(
             shrinkWrap: true,
             children: [
@@ -42,17 +42,21 @@ class SearchFindingsView extends GetView<SearchFindingsController> {
                       FontAwesomeIcons.magnifyingGlass,
                       color: Colors.black54,
                     ),
-                    onPressed: () {
-
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
               Spacing.vExtraLarge,
-              const FindingsCard(),
-              const FindingsCard(),
-              const FindingsCard(),
-
+              GestureDetector(
+                  onTap: () {
+                    Get.to(() => const FindingDetailsView());
+                  },
+                  child: const FindingsCard()),
+              GestureDetector(
+                  onTap: () {
+                    Get.to(() => const FindingDetailsView());
+                  },
+                  child: const FindingsCard()),
             ],
           ),
         ),

@@ -1,8 +1,8 @@
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
 
-class FindingDetailsView extends StatelessWidget {
-  const FindingDetailsView({
+class FindingDetailsWidget extends StatelessWidget {
+  const FindingDetailsWidget({
     Key? key,
   }) : super(key: key);
 
@@ -61,6 +61,7 @@ class FindingDetailsView extends StatelessWidget {
         ),
         Expanded(
           child: ListView(
+            padding: EdgeInsets.only(bottom: 100),
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             children: [

@@ -1,3 +1,4 @@
+import 'package:Findings/app/modules/searchFindings/views/findings_details_view.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,11 +83,21 @@ class DashboardView extends GetView<DashboardController> {
                   style: TextStyle(fontSize: 28),
                 ),
                 Spacing.vLarge,
-                const FindingsCard(),
-                const FindingsCard(),
-                const FindingsCard(),
-                const FindingsCard(),
-                const FindingsCard(),
+                GestureDetector(
+                    onTap: () {
+                      Get.to(() => const FindingDetailsView());
+                    },
+                    child: const FindingsCard()),
+                GestureDetector(
+                    onTap: () {
+                      Get.to(() => const FindingDetailsView());
+                    },
+                    child: const FindingsCard()),
+                GestureDetector(
+                    onTap: () {
+                      Get.to(() => const FindingDetailsView());
+                    },
+                    child: const FindingsCard()),
               ],
             ),
           ),
