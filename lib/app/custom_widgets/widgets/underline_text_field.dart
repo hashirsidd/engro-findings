@@ -7,7 +7,7 @@ class UnderlineTextField extends StatelessWidget {
   final RxBool isPassword;
   final TextInputType keyboardType;
   final void Function(String)? onChanged;
-  final RxBool showPassword = false.obs;
+  final RxBool showPassword = true.obs;
 
   UnderlineTextField({
     Key? key,
@@ -16,7 +16,11 @@ class UnderlineTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.onChanged,
     required this.isPassword,
-  }) : super(key: key);
+  }) {
+    if (isPassword.value) {
+      showPassword.value = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +30,10 @@ class UnderlineTextField extends StatelessWidget {
         () => TextField(
           onChanged: onChanged,
           controller: textController,
-          obscureText: showPassword.value,
+          obscureText: !showPassword.value,
           // Observe the RxBool for password visibility
           keyboardType: keyboardType,
+          autocorrect: false,
           style: Theme.of(context)
               .textTheme
               .bodyMedium

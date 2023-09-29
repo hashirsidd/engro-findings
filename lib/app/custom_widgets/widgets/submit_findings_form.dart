@@ -52,6 +52,21 @@ class SubmitFindingsForm extends StatelessWidget {
                         : DateFormat('MM/dd/y').parse(controller.date.value),
                     firstDate: DateTime(2023, 8),
                     lastDate: DateTime.now(),
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: ColorScheme.light(
+                            primary: Colors.green, // <-- SEE HERE
+                            onPrimary: Colors.white, // <-- SEE HERE
+                            onSurface: Colors.black, // <-- SEE HERE
+                          ),
+                          dialogTheme: const DialogTheme(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(16)))),
+                        ),
+                        child: child!,
+                      );
+                    },
                   );
                   if (picked != null && picked != controller.date.value) {
                     controller.date.value =

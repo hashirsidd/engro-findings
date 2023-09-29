@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:Findings/app/custom_widgets/widgets/appBar.dart';
 import 'package:Findings/app/modules/findingsApproval/controllers/findings_approval_controller.dart';
 
+import '../../../custom_widgets/widgets/findings_card.dart';
+
 class FindingsApprovalView extends GetView<FindingsApprovalController> {
   const FindingsApprovalView({Key? key}) : super(key: key);
 
@@ -14,10 +16,14 @@ class FindingsApprovalView extends GetView<FindingsApprovalController> {
       appBar: CustomAppBar(
         title: 'FINDINGS APPROVAL',
       ),
-      body: Center(
-        child: Text(
-          'FindingsApprovalView is working',
-          style: TextStyle(fontSize: 20),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8.0),
+        child: Column(
+          children: [
+            FindingsCard(),
+            FindingsCard(),
+            FindingsCard(),
+          ],
         ),
       ),
     );

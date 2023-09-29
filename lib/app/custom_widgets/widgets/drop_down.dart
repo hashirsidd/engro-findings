@@ -49,6 +49,7 @@ class DropDown extends StatelessWidget {
                 ),
                 underline: const SizedBox(),
                 icon: const Icon(Icons.keyboard_arrow_down),
+                borderRadius: BorderRadius.circular(10),
                 items: dropDownList.map((String items) {
                   return DropdownMenuItem(
                     value: items,
