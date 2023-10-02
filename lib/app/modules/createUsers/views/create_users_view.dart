@@ -45,7 +45,7 @@ class CreateUsersView extends GetView<CreateUsersController> {
                     nextFocus: controller.emailFocus,
                   ),
                   FindingsTextField(
-                    textEditingController: controller.usernameController,
+                    textEditingController: controller.userEmailController,
                     title: 'Email',
                     hint: 'Employee Email',
                     maxLines: 1,
@@ -53,15 +53,24 @@ class CreateUsersView extends GetView<CreateUsersController> {
                     currentFocus: controller.emailFocus,
                   ),
                   FindingsTextField(
-                    textEditingController: controller.usernameController,
+                    textEditingController: controller.userPasswordController,
                     title: 'Password',
                     hint: 'Password',
-                    nextFocus: controller.codeFocus,
+                    nextFocus: controller.passwordAgainFocus,
                     currentFocus: controller.passwordFocus,
                     maxLines: 1,
                   ),
                   FindingsTextField(
-                    textEditingController: controller.usernameController,
+                    textEditingController:
+                        controller.userPasswordAgainController,
+                    title: 'Password',
+                    hint: 'Password',
+                    nextFocus: controller.codeFocus,
+                    currentFocus: controller.passwordAgainFocus,
+                    maxLines: 1,
+                  ),
+                  FindingsTextField(
+                    textEditingController: controller.employeeCodeController,
                     title: 'Code',
                     hint: 'Employee Code',
                     maxLines: 1,
@@ -84,7 +93,7 @@ class CreateUsersView extends GetView<CreateUsersController> {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: controller.onPressSubmit,
+                  onPressed: controller.onPressCreateUser,
                   style: ButtonStyle(
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),

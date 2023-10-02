@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Findings/app/custom_widgets/widgets/underline_text_field.dart';
 
 class SubmitDialog extends StatelessWidget {
   final String title;

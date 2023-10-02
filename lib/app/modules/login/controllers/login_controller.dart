@@ -11,23 +11,7 @@ class LoginController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<User?> createUserWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
 
-      // The new user is now signed in, and you can access their User object.
-      User? user = userCredential.user;
-      return user;
-    } catch (e) {
-      print("Error creating user: $e");
-      return null; // Return null if there's an error
-    }
-  }
 
   onTapForgotPassword(context) {
     FocusScope.of(context).unfocus();
