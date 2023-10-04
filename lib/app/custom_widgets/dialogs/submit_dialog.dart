@@ -69,7 +69,7 @@ class SubmitDialog extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
-                        ?.copyWith(color: const Color.fromRGBO(0, 110, 0, 1)),
+                        ?.copyWith(color: Colors.black54),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
@@ -87,7 +87,7 @@ class SubmitDialog extends StatelessWidget {
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(5),
                               ),
                             ),
                           ),

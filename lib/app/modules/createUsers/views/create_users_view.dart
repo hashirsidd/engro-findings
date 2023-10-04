@@ -1,5 +1,6 @@
 import 'package:Findings/app/custom_widgets/widgets/appBar.dart';
 import 'package:Findings/app/custom_widgets/widgets/findings_text_field.dart';
+import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -82,6 +83,24 @@ class CreateUsersView extends GetView<CreateUsersController> {
                     hint: 'Select area',
                     title: 'Area',
                   ),
+                  Spacing.vStandard,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Admin",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      Obx(() => Switch(
+                        value: controller.isAdmin.value,
+                        activeColor: Colors.green,
+                        onChanged: (bool value) {
+                          controller.isAdmin.value = value;
+                        },
+                      )),
+                    ],
+                  ),
+
                 ]),
           ),
           if (MediaQuery.of(context).viewInsets.bottom < 50)

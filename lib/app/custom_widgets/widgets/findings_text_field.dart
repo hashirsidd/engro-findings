@@ -53,6 +53,7 @@ class FindingsTextField extends StatelessWidget {
               enabled: enabled,
               controller: textEditingController,
               focusNode: currentFocus,
+              autocorrect: false,
               textInputAction: nextFocus != null
                   ? TextInputAction.next
                   : TextInputAction.done,

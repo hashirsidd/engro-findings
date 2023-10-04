@@ -21,16 +21,13 @@ class HomeView extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset(
-                      'assets/engro.png',
-                      height: 50,
-                    ),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Get.toNamed(Routes.PROFILE);
                       },
                       child: Container(
@@ -38,8 +35,8 @@ class HomeView extends GetView<HomeController> {
                             borderRadius: BorderRadius.circular(50),
                             border: Border.all(color: Colors.green, width: 2)),
                         clipBehavior: Clip.hardEdge,
-                        height: 45,
-                        width: 45,
+                        height: 40,
+                        width: 40,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
@@ -52,6 +49,18 @@ class HomeView extends GetView<HomeController> {
                             fit: BoxFit.cover,
                           ),
                         ),
+                      ),
+                    ),
+                    Image.asset(
+                      'assets/engro.png',
+                      height: 50,
+                    ),
+                    GestureDetector(
+                      onTap: controller.logoutUser,
+                      child: const Icon(
+                        Icons.logout,
+                        color: Colors.grey,
+                        size: 30,
                       ),
                     )
                   ],

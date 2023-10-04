@@ -137,7 +137,6 @@ class ProfileView extends GetView<ProfileController> {
                             )),
                       ],
                     ),
-
                   ]),
             ),
           ),
