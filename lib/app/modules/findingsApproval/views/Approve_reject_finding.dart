@@ -81,6 +81,34 @@ class ApproveRejectFindingView extends GetView {
                       ),
                     ),
                   ),
+                  Spacing.hStandard,
+                  Expanded(
+                    child: Container(
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                          foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue),
+                          shape:
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          'Edit',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

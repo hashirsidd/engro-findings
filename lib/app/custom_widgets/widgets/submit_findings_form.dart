@@ -55,14 +55,18 @@ class SubmitFindingsForm extends StatelessWidget {
                     builder: (context, child) {
                       return Theme(
                         data: Theme.of(context).copyWith(
-                          colorScheme: ColorScheme.light(
-                            primary: Colors.green, // <-- SEE HERE
-                            onPrimary: Colors.white, // <-- SEE HERE
-                            onSurface: Colors.black, // <-- SEE HERE
+                          colorScheme: const ColorScheme.light(
+                            primary: Colors.green,
+                            onPrimary: Colors.white,
+                            onSurface: Colors.black,
                           ),
                           dialogTheme: const DialogTheme(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(16)))),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16),
+                              ),
+                            ),
+                          ),
                         ),
                         child: child!,
                       );
@@ -169,6 +173,59 @@ class SubmitFindingsForm extends StatelessWidget {
           ],
         ),
         Spacing.vStandard,
+        const Text(
+          "Upload Images",
+          style: TextStyle(fontSize: 18),
+        ),
+        Spacing.vStandard,
+        Expanded(
+          child: Container(
+            height: 100,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0.0, 0.0),
+                    blurRadius: 3.0,
+                  ),
+                ],
+                border: Border.all(color: Colors.black12),
+                borderRadius: BorderRadius.circular(10)),
+            child: ListView(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              children: [
+
+               Spacing.hStandard,
+
+                Container(
+                  width: 80,
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0.0, 0.0),
+                        blurRadius: 3.0,
+                      ),
+                    ],
+                    border: Border.all(color: Colors.black38),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.black54,
+                    size: 30,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Spacing.vLarge,
         SizedBox(
           height: 50,
           width: double.infinity,

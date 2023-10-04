@@ -14,6 +14,25 @@ class SubmittedFindingsView extends GetView<SubmittedFindingsController> {
       appBar: const CustomAppBar(
         title: 'SUBMITTED FINDINGS',
       ),
+      floatingActionButton: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, 1.0),
+              blurRadius: 7.0,
+            ),
+          ],
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(150),
+        ),
+        child: const Icon(
+          Icons.download,
+          color: Colors.white,
+          size: 31,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8.0),
         child: Column(
