@@ -13,6 +13,17 @@ class ProfileController extends GetxController {
   FocusNode passwordFocus = FocusNode();
   FocusNode codeFocus = FocusNode();
 
+  RxBool allowNotification = true.obs;
+
+  onPressSave() {
+    Get.snackbar(
+      'Success',
+      "Profile updated successfully!",
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+    );
+  }
+
   @override
   void onInit() {
     super.onInit();
