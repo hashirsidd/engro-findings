@@ -4,9 +4,13 @@ import 'package:get/get.dart';
 import '../widgets/underline_text_field.dart';
 
 class ForgotPasswordDialog extends StatelessWidget {
-  final TextEditingController emailController;
+  final TextEditingController emailController = TextEditingController();
+  final Function onPress;
 
-  const ForgotPasswordDialog({Key? key, required this.emailController}) : super(key: key);
+  ForgotPasswordDialog({
+    Key? key,
+    required this.onPress,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +76,8 @@ class ForgotPasswordDialog extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.green,
                             backgroundColor: Colors.white,
-                            side: const BorderSide(
-                                color: Colors.green, width: 1),
+                            side:
+                                const BorderSide(color: Colors.green, width: 1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0),
                             ),
@@ -85,10 +89,7 @@ class ForgotPasswordDialog extends StatelessWidget {
                       const SizedBox(width: 10),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {
-                            emailController.clear();
-                            Get.back();
-                          },
+                          onPressed: () => onPress(emailController.text.trim()),
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: Colors.green,

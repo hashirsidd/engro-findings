@@ -66,12 +66,13 @@ class CreateUsersController extends GetxController {
                 .set({
               'name': usernameController.text.trim(),
               'email': userEmailController.text.trim(),
-              'employeeCode': employeeCodeController.text.trim(),
-              'area': area.value.trim(),
-              'isLoginAllowed': true,
-              'isAdmin': isAdmin.value,
-              'profilePictureUrl': '',
-              'notifications': true
+              "employeeCode": employeeCodeController.text.trim(),
+              "area": area.value.trim(),
+              "isLoginAllowed": true,
+              "isAdmin": isAdmin.value,
+              "profilePictureUrl": '',
+              "notifications": true,
+              'uid': user.uid,
             });
             Get.back();
             Get.offAllNamed(Routes.HOME);

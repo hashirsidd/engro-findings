@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../routes/app_pages.dart';
+import 'package:Findings/app/routes/app_pages.dart';
 
-class SplashController extends GetxController with GetSingleTickerProviderStateMixin {
+class SplashController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   RxBool logoVisible = false.obs;
   late AnimationController animationController;
 
@@ -12,6 +13,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
     final user = FirebaseAuth.instance.currentUser;
     return user != null;
   }
+
 
   navigateAfterSplash() {
     Future.delayed(const Duration(seconds: 5), () async {
@@ -41,6 +43,10 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
     navigateAfterSplash();
   }
 
+  @override
+  void onReady() {
+    super.onReady();
+  }
 
   @override
   void onClose() {

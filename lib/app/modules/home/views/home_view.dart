@@ -38,17 +38,24 @@ class HomeView extends GetView<HomeController> {
                         height: 40,
                         width: 40,
                         child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          clipBehavior: Clip.hardEdge,
-                          height: 45,
-                          width: 45,
-                          child: Image.asset(
-                            'assets/user.png',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            height: 45,
+                            width: 45,
+                            child: Obx(
+                              () => controller.user.value.profilePictureUrl ==
+                                      ""
+                                  ? Image.asset(
+                                      'assets/user.png',
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.network(
+                                      controller.user.value.profilePictureUrl!,
+                                      fit: BoxFit.cover,
+                                    ),
+                            )),
                       ),
                     ),
                     Image.asset(
