@@ -50,12 +50,14 @@ class CreateUsersController extends GetxController {
     } else {
       Get.dialog(LoadingDialog(), barrierDismissible: false);
       try {
-        UserCredential userCredential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        FirebaseApp app = await Firebase.initializeApp(
+            name: 'Secondary', options: Firebase.app().options);
+        UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+            .createUserWithEmailAndPassword(
           email: userEmailController.text.trim(),
           password: userPasswordController.text.trim(),
         );
-
+        await app.delete();
         User? user = userCredential.user;
 
         if (user != null) {
@@ -103,11 +105,39 @@ class CreateUsersController extends GetxController {
           print("User creation failed!");
           throw "User creation failed!";
         }
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'email-already-in-use') {
+          CustomGetxWidgets.CustomSnackbar(
+            'Error',
+            "User already exists",
+            color: Colors.red,
+          );
+        }
+        if (e.code == 'invalid-email') {
+          CustomGetxWidgets.CustomSnackbar(
+            'Error',
+            "Invalid email",
+            color: Colors.red,
+          );
+        } else if (e.code == 'weak-password') {
+          CustomGetxWidgets.CustomSnackbar(
+            'Error',
+            "Weak password",
+            color: Colors.red,
+          );
+        } else {
+          Get.snackbar(
+            'Error',
+            'An error occurred: ${e.message}',
+          );
+        }
       } catch (e) {
         Get.back();
-        print("$e!");
         CustomGetxWidgets.CustomSnackbar(
-            'Error', "Unable to create user!\nUnexpected error occurred!");
+          'Error',
+          "Unable to create user!\nUnexpected error occurred!",
+          color: Colors.red,
+        );
       }
     }
   }

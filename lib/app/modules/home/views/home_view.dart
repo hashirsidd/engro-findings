@@ -156,17 +156,25 @@ class HomeView extends GetView<HomeController> {
                                       onTap: () => Get.toNamed(
                                           Routes.SUBMITTED_FINDINGS),
                                     ),
-                                    HomeTabs(
-                                      title: 'Create\nUsers',
-                                      assetPath: 'assets/addUser.png',
-                                      onTap: () =>
-                                          Get.toNamed(Routes.CREATE_USERS),
+                                    Obx(
+                                      () => controller.user.value.isAdmin
+                                          ? HomeTabs(
+                                              title: 'Create\nUsers',
+                                              assetPath: 'assets/addUser.png',
+                                              onTap: () => Get.toNamed(
+                                                  Routes.CREATE_USERS),
+                                            )
+                                          : const SizedBox(),
                                     ),
-                                    HomeTabs(
-                                      title: 'Findings\nApproval',
-                                      assetPath: 'assets/approvals.png',
-                                      onTap: () =>
-                                          Get.toNamed(Routes.FINDINGS_APPROVAL),
+                                    Obx(
+                                      () => controller.user.value.isAdmin
+                                          ? HomeTabs(
+                                              title: 'Findings\nApproval',
+                                              assetPath: 'assets/approvals.png',
+                                              onTap: () => Get.toNamed(
+                                                  Routes.FINDINGS_APPROVAL),
+                                            )
+                                          : const SizedBox(),
                                     ),
                                   ],
                                 ),

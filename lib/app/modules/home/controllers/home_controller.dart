@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:Findings/app/custom_widgets/dialogs/loading_dialog.dart';
 import 'package:Findings/app/custom_widgets/widgets/customSnackbar.dart';
 import 'package:Findings/app/data/user_model.dart';
