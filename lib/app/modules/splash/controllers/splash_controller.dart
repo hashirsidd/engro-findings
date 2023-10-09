@@ -1,11 +1,12 @@
+import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:Findings/app/routes/app_pages.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class SplashController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class SplashController extends GetxController with GetSingleTickerProviderStateMixin {
   RxBool logoVisible = false.obs;
   late AnimationController animationController;
 
@@ -13,7 +14,6 @@ class SplashController extends GetxController
     final user = FirebaseAuth.instance.currentUser;
     return user != null;
   }
-
 
   navigateAfterSplash() {
     Future.delayed(const Duration(seconds: 5), () async {
@@ -36,6 +36,17 @@ class SplashController extends GetxController
     });
   }
 
+  askPermission() async {
+    try {
+      print(await Permission.storage.status);
+      if (!(await Permission.storage.status.isGranted)) {
+        await Permission.storage.request();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -46,6 +57,7 @@ class SplashController extends GetxController
   @override
   void onReady() {
     super.onReady();
+    askPermission();
   }
 
   @override

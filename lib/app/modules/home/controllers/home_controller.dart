@@ -10,11 +10,22 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   final TextEditingController searchController = TextEditingController();
   Rx<UserModel> user = UserModel().obs;
+  RxInt newFindings = 0.obs;
 
   logoutUser() async {
     Get.dialog(LoadingDialog(), barrierDismissible: false);
     await FirebaseAuth.instance.signOut();
     Get.offAllNamed(Routes.SPLASH);
+  }
+
+  Future getApprovalsCount() async {
+    var findingsCount =
+        await FirebaseFirestore.instance.collection('findings').doc("newFindings").get();
+    if (findingsCount.data() != null) {
+      newFindings.value = findingsCount.data()!['new'];
+    } else {
+      throw 'error in getting new findings count';
+    }
   }
 
   getUserData() async {
@@ -26,6 +37,7 @@ class HomeController extends GetxController {
           .get();
       if (value.data() != null) {
         user.value = UserModel.fromJson(value.data()!);
+        await getApprovalsCount();
       } else {
         throw 'User not found';
       }

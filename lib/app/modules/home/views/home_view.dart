@@ -21,8 +21,7 @@ class HomeView extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -45,8 +44,7 @@ class HomeView extends GetView<HomeController> {
                             height: 45,
                             width: 45,
                             child: Obx(
-                              () => controller.user.value.profilePictureUrl ==
-                                      ""
+                              () => controller.user.value.profilePictureUrl == ""
                                   ? Image.asset(
                                       'assets/user.png',
                                       fit: BoxFit.cover,
@@ -93,8 +91,7 @@ class HomeView extends GetView<HomeController> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
-                                ?.copyWith(
-                                    fontWeight: FontWeight.w400, fontSize: 38),
+                                ?.copyWith(fontWeight: FontWeight.w400, fontSize: 38),
                           ),
                           Text(
                             'Share your learning with us!',
@@ -116,16 +113,10 @@ class HomeView extends GetView<HomeController> {
                               Expanded(
                                 child: GridView.count(
                                   padding: const EdgeInsets.only(
-                                      left: 20.0,
-                                      right: 20,
-                                      top: 50,
-                                      bottom: 60),
+                                      left: 20.0, right: 20, top: 50, bottom: 60),
                                   shrinkWrap: true,
                                   physics: const BouncingScrollPhysics(),
-                                  crossAxisCount:
-                                      MediaQuery.of(context).size.width > 550
-                                          ? 4
-                                          : 2,
+                                  crossAxisCount: MediaQuery.of(context).size.width > 550 ? 4 : 2,
                                   crossAxisSpacing: 20,
                                   mainAxisSpacing: 20,
                                   children: [
@@ -153,26 +144,24 @@ class HomeView extends GetView<HomeController> {
                                     HomeTabs(
                                       title: 'Submitted\nFindings',
                                       assetPath: 'assets/yourFindings.png',
-                                      onTap: () => Get.toNamed(
-                                          Routes.SUBMITTED_FINDINGS),
+                                      onTap: () => Get.toNamed(Routes.SUBMITTED_FINDINGS),
                                     ),
                                     Obx(
                                       () => controller.user.value.isAdmin
                                           ? HomeTabs(
                                               title: 'Create\nUsers',
                                               assetPath: 'assets/addUser.png',
-                                              onTap: () => Get.toNamed(
-                                                  Routes.CREATE_USERS),
+                                              onTap: () => Get.toNamed(Routes.CREATE_USERS),
                                             )
                                           : const SizedBox(),
                                     ),
                                     Obx(
                                       () => controller.user.value.isAdmin
                                           ? HomeTabs(
-                                              title: 'Findings\nApproval',
+                                              title:
+                                                  'Findings\nApproval${controller.newFindings.value > 0 ? '\n(${controller.newFindings.value})' : ''}',
                                               assetPath: 'assets/approvals.png',
-                                              onTap: () => Get.toNamed(
-                                                  Routes.FINDINGS_APPROVAL),
+                                              onTap: () => Get.toNamed(Routes.FINDINGS_APPROVAL),
                                             )
                                           : const SizedBox(),
                                     ),
@@ -182,8 +171,7 @@ class HomeView extends GetView<HomeController> {
                             ],
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
                             child: GestureDetector(
                               onTap: () {
                                 Get.toNamed(Routes.SEARCH_FINDINGS);
@@ -193,14 +181,11 @@ class HomeView extends GetView<HomeController> {
                                 child: SearchBar(
                                   elevation: MaterialStateProperty.all(10),
                                   hintText: "Search findings",
-                                  hintStyle:
-                                      MaterialStateProperty.all<TextStyle>(
-                                          const TextStyle(color: Colors.grey)),
-                                  textStyle: MaterialStateProperty.all<
-                                          TextStyle>(
+                                  hintStyle: MaterialStateProperty.all<TextStyle>(
+                                      const TextStyle(color: Colors.grey)),
+                                  textStyle: MaterialStateProperty.all<TextStyle>(
                                       Theme.of(context).textTheme.bodyMedium!),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15.0),
                                     ),
@@ -273,10 +258,8 @@ class HomeTabs extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w300),
+              style:
+                  const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w300),
             ),
             Row(
               children: [

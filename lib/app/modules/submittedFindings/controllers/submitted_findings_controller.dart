@@ -1,33 +1,12 @@
+import 'package:Findings/app/modules/fileFindings/controllers/file_findings_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../custom_widgets/dialogs/submit_dialog.dart';
 import '../../../routes/app_pages.dart';
 
-class SubmittedFindingsController extends GetxController {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController findingController = TextEditingController();
-  TextEditingController equipmentDescriptionController =
-      TextEditingController();
-  TextEditingController equipmentTagController = TextEditingController();
-  TextEditingController problemController = TextEditingController();
-  TextEditingController solutionController = TextEditingController();
-  TextEditingController preventionController = TextEditingController();
-  TextEditingController areaGlController = TextEditingController();
-  TextEditingController createdByController = TextEditingController();
-  FocusNode findingFocus = FocusNode();
-  FocusNode equipmentDescriptionFocus = FocusNode();
-  FocusNode equipmentTagFocus = FocusNode();
-  FocusNode problemFocus = FocusNode();
-  FocusNode solutionFocus = FocusNode();
-  FocusNode preventionFocus = FocusNode();
-  FocusNode areaGlFocus = FocusNode();
-
-  String buttonText = 'Save';
-  RxString area = ''.obs;
-  RxString category = ''.obs;
-  RxString date = ''.obs;
-
+class SubmittedFindingsController extends FindingsController {
+  @override
   onPressSubmit() {
     Get.offAllNamed(Routes.HOME);
     Get.dialog(
