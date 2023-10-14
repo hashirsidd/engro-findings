@@ -25,13 +25,13 @@ class ApproveRejectFindingView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'FINDINGS',
       ),
       body: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8.0),
             child: FindingDetailsWidget(
               user: user,
               finding: finding,
@@ -40,11 +40,11 @@ class ApproveRejectFindingView extends GetView {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () => onTapReject(),
@@ -67,7 +67,7 @@ class ApproveRejectFindingView extends GetView {
                   ),
                   Spacing.hStandard,
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () => onTapApprove(),
@@ -90,7 +90,7 @@ class ApproveRejectFindingView extends GetView {
                   ),
                   Spacing.hStandard,
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () => onTapEdit(),

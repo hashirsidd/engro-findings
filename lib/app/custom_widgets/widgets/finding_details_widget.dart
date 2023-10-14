@@ -1,8 +1,11 @@
+import 'package:Findings/app/custom_widgets/widgets/image_viewer.dart';
 import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/data/user_model.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class FindingDetailsWidget extends StatelessWidget {
   final FindingsModel finding;
@@ -252,6 +255,71 @@ class FindingDetailsWidget extends StatelessWidget {
                   ),
                 ],
               ),
+              Spacing.vExtraLarge,
+              finding.images.isNotEmpty
+                  ? Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(0.0, 0.0),
+                            blurRadius: 3.0,
+                          ),
+                        ],
+                        border: Border.all(color: Colors.black12),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                              width: 80,
+                              height: 80,
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.black38),
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.to(() => ImageViewer(
+                                        images: finding.images,
+                                        index: index,
+                                      ));
+                                },
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: finding.images[index],
+                                  progressIndicatorBuilder: (context, url, downloadProgress) {
+                                    if (downloadProgress == null) {
+                                      return const SizedBox();
+                                    }
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 30,
+                                        height: 30,
+                                        child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            value: downloadProgress.totalSize != null
+                                                ? downloadProgress.totalSize! /
+                                                    downloadProgress.downloaded
+                                                : null),
+                                      ),
+                                    );
+                                  },
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                ),
+                              ));
+                        },
+                        itemCount: finding.images.length,
+                      ))
+                  : const SizedBox(),
+              Spacing.vLarge,
             ],
           ),
         ),

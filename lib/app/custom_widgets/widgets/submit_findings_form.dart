@@ -1,3 +1,4 @@
+import 'package:Findings/app/custom_widgets/widgets/image_viewer.dart';
 import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -216,37 +217,46 @@ class SubmitFindingsForm extends StatelessWidget {
                                   border: Border.all(color: Colors.black38),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: controller.images[index] is String
-                                    ? CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                        imageUrl: controller.images[index],
-                                        progressIndicatorBuilder: (context, url, downloadProgress) {
-                                          if (downloadProgress == null) {
-                                            return SizedBox();
-                                          }
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 30,
-                                              height: 30,
-                                              child: CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  value: downloadProgress.totalSize != null
-                                                      ? downloadProgress.totalSize! /
-                                                          downloadProgress.downloaded
-                                                      : null),
-                                            ),
-                                          );
-                                        },
-                                        errorWidget: (context, url, error) => Icon(Icons.error),
-                                      )
-                                    : Image.memory(
-                                        controller.images[index],
-                                        fit: BoxFit.cover,
-                                        errorBuilder: (BuildContext context, Object exception,
-                                            StackTrace? stackTrace) {
-                                          return const Center(child: Icon(Icons.broken_image));
-                                        },
-                                      ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => ImageViewer(
+                                          images: controller.images,
+                                          index: index,
+                                        ));
+                                  },
+                                  child: controller.images[index] is String
+                                      ? CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl: controller.images[index],
+                                          progressIndicatorBuilder:
+                                              (context, url, downloadProgress) {
+                                            if (downloadProgress == null) {
+                                              return SizedBox();
+                                            }
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 30,
+                                                height: 30,
+                                                child: CircularProgressIndicator(
+                                                    strokeWidth: 2,
+                                                    value: downloadProgress.totalSize != null
+                                                        ? downloadProgress.totalSize! /
+                                                            downloadProgress.downloaded
+                                                        : null),
+                                              ),
+                                            );
+                                          },
+                                          errorWidget: (context, url, error) => Icon(Icons.error),
+                                        )
+                                      : Image.memory(
+                                          controller.images[index],
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (BuildContext context, Object exception,
+                                              StackTrace? stackTrace) {
+                                            return const Center(child: Icon(Icons.broken_image));
+                                          },
+                                        ),
+                                ),
                               ),
                             ),
                             Positioned(

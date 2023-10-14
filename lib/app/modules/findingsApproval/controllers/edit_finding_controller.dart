@@ -65,7 +65,6 @@ class EditFindingsController extends FindingsController {
         timeStamp: FieldValue.serverTimestamp(),
         areaGl: areaGlController.text.trim(),
       );
-      print(images.length);
       try {
         await FirebaseFirestore.instance
             .collection('findings')
@@ -76,14 +75,13 @@ class EditFindingsController extends FindingsController {
         findingsApprovalController.unApprovedFindings.refresh();
         super.dispose();
         Get.back();
-        Get.back();
+        Get.until((route) => route.settings.name == Routes.FINDINGS_APPROVAL);
       } catch (e) {
         Get.back();
         CustomGetxWidgets.CustomSnackbar('Error', 'Please try again!', color: Colors.red);
         debugPrint('Error in uploading new findings : $e');
       }
     }
-    Get.back();
   }
 
   @override
