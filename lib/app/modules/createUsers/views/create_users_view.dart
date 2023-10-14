@@ -19,7 +19,8 @@ class CreateUsersView extends GetView<CreateUsersController> {
       'UREA-II',
       'URUT-III',
       'AMM-II',
-      'AMM-III'
+      'AMM-III',
+      'Workshop'
     ];
 
     return Scaffold(

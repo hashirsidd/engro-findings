@@ -11,12 +11,14 @@ class ApproveRejectFindingView extends GetView {
   final UserModel user;
   final Function onTapApprove;
   final Function onTapReject;
+  final Function onTapEdit;
 
   const ApproveRejectFindingView({
     required this.finding,
     required this.user,
     required this.onTapApprove,
     required this.onTapReject,
+    required this.onTapEdit,
     Key? key,
   }) : super(key: key);
 
@@ -91,7 +93,7 @@ class ApproveRejectFindingView extends GetView {
                     child: Container(
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => onTapEdit(),
                         style: ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),

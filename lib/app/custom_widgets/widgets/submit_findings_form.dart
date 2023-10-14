@@ -1,5 +1,6 @@
 import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 import 'package:Findings/app/utils/spacing.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +17,7 @@ class SubmitFindingsForm extends StatelessWidget {
   }) : super(key: key);
 
   var categoryList = ['Machinery', 'Stationary'];
-  var areaList = ['PM&S', 'URUT-I', 'UREA-II', 'URUT-III', 'AMM-II', 'AMM-III'];
+  var areaList = ['PM&S', 'URUT-I', 'UREA-II', 'URUT-III', 'AMM-II', 'AMM-III', 'Workshop'];
   HomeController homeController = Get.find();
 
   @override
@@ -216,32 +217,27 @@ class SubmitFindingsForm extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: controller.images[index] is String
-                                    ? Image.network(
-                                        controller.images[index],
+                                    ? CachedNetworkImage(
                                         fit: BoxFit.cover,
-                                        loadingBuilder: (BuildContext context, Widget child,
-                                            ImageChunkEvent? loadingProgress) {
-                                          if (loadingProgress == null) {
-                                            return child;
+                                        imageUrl: controller.images[index],
+                                        progressIndicatorBuilder: (context, url, downloadProgress) {
+                                          if (downloadProgress == null) {
+                                            return SizedBox();
                                           }
                                           return Center(
                                             child: SizedBox(
                                               width: 30,
                                               height: 30,
                                               child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                value: loadingProgress.expectedTotalBytes != null
-                                                    ? loadingProgress.cumulativeBytesLoaded /
-                                                        loadingProgress.expectedTotalBytes!
-                                                    : null,
-                                              ),
+                                                  strokeWidth: 2,
+                                                  value: downloadProgress.totalSize != null
+                                                      ? downloadProgress.totalSize! /
+                                                          downloadProgress.downloaded
+                                                      : null),
                                             ),
                                           );
                                         },
-                                        errorBuilder: (BuildContext context, Object exception,
-                                            StackTrace? stackTrace) {
-                                          return const Center(child: Icon(Icons.broken_image));
-                                        },
+                                        errorWidget: (context, url, error) => Icon(Icons.error),
                                       )
                                     : Image.memory(
                                         controller.images[index],

@@ -19,7 +19,8 @@ class ProfileView extends GetView<ProfileController> {
       'UREA-II',
       'URUT-III',
       'AMM-II',
-      'AMM-III'
+      'AMM-III',
+      'Workshop'
     ];
     return Scaffold(
       appBar: const CustomAppBar(

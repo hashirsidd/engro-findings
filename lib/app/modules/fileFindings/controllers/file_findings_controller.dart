@@ -80,6 +80,32 @@ class FindingsController extends GetxController {
       print('error in onTapUploadImage : $e');
     }
   }
+
+  @override
+  void onClose() {
+    titleController.dispose();
+    findingController.dispose();
+    equipmentDescriptionController.dispose();
+    equipmentTagController.dispose();
+    problemController.dispose();
+    solutionController.dispose();
+    preventionController.dispose();
+    areaGlController.dispose();
+    createdByController.dispose();
+
+    findingFocus.dispose();
+    equipmentDescriptionFocus.dispose();
+    equipmentTagFocus.dispose();
+    problemFocus.dispose();
+    solutionFocus.dispose();
+    preventionFocus.dispose();
+    areaGlFocus.dispose();
+
+    // Clear the images list
+    images.clear();
+
+    super.onClose();
+  }
 }
 
 class FileFindingsController extends FindingsController {

@@ -1,6 +1,7 @@
 import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/data/user_model.dart';
 import 'package:Findings/app/utils/spacing.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class FindingDetailsWidget extends StatelessWidget {
@@ -30,8 +31,8 @@ class FindingDetailsWidget extends StatelessWidget {
                 ),
                 clipBehavior: Clip.hardEdge,
                 child: user.profilePictureUrl != ""
-                    ? Image.network(
-                        user.profilePictureUrl,
+                    ? CachedNetworkImage(
+                        imageUrl: user.profilePictureUrl,
                         fit: BoxFit.cover,
                       )
                     : Image.asset(
@@ -204,7 +205,7 @@ class FindingDetailsWidget extends StatelessWidget {
               ),
               Spacing.vStandard,
               Text(
-                finding.solution,
+                finding.prevention,
                 style: const TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black54),
               ),
