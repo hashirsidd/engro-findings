@@ -18,17 +18,18 @@ class HomeController extends GetxController {
     Get.offAllNamed(Routes.SPLASH);
   }
 
-  Future getApprovalsCount() async {
+  Future<void> getApprovalsCount() async {
     var findingsCount =
-        await FirebaseFirestore.instance.collection('findings').doc("newFindings").get();
+        await FirebaseFirestore.instance.collection('newFindings').doc("newFindings").get();
     if (findingsCount.data() != null) {
       newFindings.value = findingsCount.data()!['new'];
+      print(newFindings.value);
     } else {
       throw 'error in getting new findings count';
     }
   }
 
-  getUserData() async {
+  Future<void> getUserData() async {
     Get.dialog(LoadingDialog(), barrierDismissible: false);
     try {
       var value = await FirebaseFirestore.instance

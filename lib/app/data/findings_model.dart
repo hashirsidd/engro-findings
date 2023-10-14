@@ -20,10 +20,10 @@ class FindingsModel {
   String solution;
   String prevention;
   List images;
-  bool isApproved;
+  int status; //1 = accepted,0 = rejected,2 = inreview
   String createdByEmail;
   String createdByUid;
-
+  dynamic timeStamp;
   FindingsModel({
     required this.title,
     required this.area,
@@ -36,9 +36,10 @@ class FindingsModel {
     required this.solution,
     required this.prevention,
     required this.images,
-    required this.isApproved,
+    required this.status,
     required this.createdByEmail,
     required this.createdByUid,
+    required this.timeStamp,
   });
 
   factory FindingsModel.fromJson(Map<String, dynamic> json) => FindingsModel(
@@ -53,9 +54,10 @@ class FindingsModel {
         solution: json["solution"],
         prevention: json["prevention"],
         images: List.from(json["images"].map((x) => x)),
-        isApproved: json["isApproved"],
+        status: json["isApproved"],
         createdByEmail: json["createdByEmail"],
         createdByUid: json["createdByUid"],
+        timeStamp: json["timeStamp"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -70,8 +72,9 @@ class FindingsModel {
         "solution": solution,
         "prevention": prevention,
         "images": List<dynamic>.from(images.map((x) => x)),
-        "isApproved": isApproved,
+        "isApproved": status,
         "createdByEmail": createdByEmail,
         "createdByUid": createdByUid,
+        "timeStamp": timeStamp,
       };
 }

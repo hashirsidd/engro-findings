@@ -1,19 +1,16 @@
 import 'dart:typed_data';
-
 import 'package:Findings/app/custom_widgets/dialogs/loading_dialog.dart';
 import 'package:Findings/app/custom_widgets/widgets/customSnackbar.dart';
 import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/modules/home/controllers/home_controller.dart';
-import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 import 'package:Findings/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../custom_widgets/dialogs/submit_dialog.dart';
+import 'package:Findings/app/custom_widgets/dialogs/submit_dialog.dart';
 
 class FindingsController extends GetxController {
   TextEditingController titleController = TextEditingController();
@@ -73,7 +70,6 @@ class FindingsController extends GetxController {
     try {
       final ImagePicker picker = ImagePicker();
       final List<XFile> pickedImages = await picker.pickMultiImage(imageQuality: 50);
-
       if (pickedImages.isNotEmpty) {
         pickedImages.forEach((element) async {
           images.add(await element.readAsBytes());
@@ -135,15 +131,16 @@ class FileFindingsController extends FindingsController {
         solution: solutionController.text.trim(),
         prevention: preventionController.text.trim(),
         images: images.value,
-        isApproved: false,
+        status: 3,
         createdByEmail: homeController.user.value.email,
         createdByUid: homeController.user.value.uid,
+        timeStamp: FieldValue.serverTimestamp(),
       );
       debugPrint(findings.toJson().toString());
       try {
         await FirebaseFirestore.instance.collection('findings').add(findings.toJson());
         await FirebaseFirestore.instance
-            .collection('findings')
+            .collection('newFindings')
             .doc('newFindings')
             .set({'new': FieldValue.increment(1)});
         homeController.newFindings.value++;
