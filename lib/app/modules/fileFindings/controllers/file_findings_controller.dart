@@ -131,10 +131,11 @@ class FileFindingsController extends FindingsController {
         solution: solutionController.text.trim(),
         prevention: preventionController.text.trim(),
         images: images.value,
-        status: 3,
+        status: 2,
         createdByEmail: homeController.user.value.email,
         createdByUid: homeController.user.value.uid,
         timeStamp: FieldValue.serverTimestamp(),
+        areaGl: areaGlController.text.trim(),
       );
       debugPrint(findings.toJson().toString());
       try {

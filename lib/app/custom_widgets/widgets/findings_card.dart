@@ -15,11 +15,23 @@ enum Status {
 class FindingsCard extends StatelessWidget {
   final Status status;
   final bool showStatus;
+  final String title;
+  final String description;
+  final String date;
+  final String area;
+  final String tag;
+  final String category;
 
-  const FindingsCard({
+  FindingsCard({
     Key? key,
     this.showStatus = false,
     this.status = Status.accepted,
+    this.title = "",
+    this.description = '',
+    this.date = '',
+    this.area = '',
+    this.tag = '',
+    this.category = '',
   }) : super(key: key);
 
   @override
@@ -40,20 +52,26 @@ class FindingsCard extends StatelessWidget {
         ],
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Engro Maintenance Report',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87),
+              Expanded(
+                child: Text(
+                  title,
+                  overflow: TextOverflow.clip,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black87),
+                ),
               ),
+              Spacing.hLarge,
               Text(
-                '31/6/23',
-                style: TextStyle(
+                date,
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey,
@@ -62,14 +80,13 @@ class FindingsCard extends StatelessWidget {
             ],
           ),
           Spacing.vStandard,
-          const Text(
-            "The preliminary analysis of our sales data for this quarter shows promising growth in our key markets. We've seen a 12% increase in revenue compared to the same period last year.",
+          Text(
+            description,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.black54),
+            textAlign: TextAlign.left,
+            style:
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black54),
           ),
           Spacing.vExtraLarge,
           Row(
@@ -82,11 +99,11 @@ class FindingsCard extends StatelessWidget {
                     color: const Color.fromRGBO(87, 130, 243, 1.0),
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: const Text(
-                    'AS-01',
+                  child: Text(
+                    tag.toUpperCase(),
                     overflow: TextOverflow.clip,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Colors.white,
@@ -103,11 +120,11 @@ class FindingsCard extends StatelessWidget {
                     color: Colors.orangeAccent,
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: const Text(
-                    'Workshop',
+                  child: Text(
+                    area,
                     overflow: TextOverflow.clip,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Colors.white,
@@ -124,11 +141,11 @@ class FindingsCard extends StatelessWidget {
                     color: const Color.fromRGBO(3, 155, 16, 1.0),
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: const Text(
-                    'Stationary',
+                  child: Text(
+                    category,
                     overflow: TextOverflow.clip,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Colors.white,

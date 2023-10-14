@@ -35,7 +35,8 @@ class FindingDetailsView extends StatelessWidget {
       ),
       body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
-          child: FindingDetailsWidget()),
+          // child: FindingDetailsWidget()
+      ),
     );
   }
 }

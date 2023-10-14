@@ -59,8 +59,7 @@ class DashboardView extends GetView<DashboardController> {
                 ),
                 Spacing.vLarge,
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -87,17 +86,17 @@ class DashboardView extends GetView<DashboardController> {
                     onTap: () {
                       Get.to(() => const FindingDetailsView());
                     },
-                    child: const FindingsCard()),
+                    child: FindingsCard()),
                 GestureDetector(
                     onTap: () {
                       Get.to(() => const FindingDetailsView());
                     },
-                    child: const FindingsCard()),
+                    child: FindingsCard()),
                 GestureDetector(
                     onTap: () {
                       Get.to(() => const FindingDetailsView());
                     },
-                    child: const FindingsCard()),
+                    child: FindingsCard()),
               ],
             ),
           ),

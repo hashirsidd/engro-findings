@@ -41,7 +41,7 @@ class SubmittedFindingsView extends GetView<SubmittedFindingsController> {
               onTap: () {
                 Get.to(() => const FindingDetailsView());
               },
-              child: const FindingsCard(
+              child:   FindingsCard(
                 showStatus: true,
                 status: Status.rejected,
               ),
@@ -50,7 +50,7 @@ class SubmittedFindingsView extends GetView<SubmittedFindingsController> {
               onTap: () {
                 Get.to(() => const FindingDetailsView());
               },
-              child: const FindingsCard(
+              child:   FindingsCard(
                 showStatus: true,
                 status: Status.accepted,
               ),
@@ -59,7 +59,7 @@ class SubmittedFindingsView extends GetView<SubmittedFindingsController> {
               onTap: () {
                 Get.to(() => const FindingDetailsView());
               },
-              child: const FindingsCard(
+              child:   FindingsCard(
                 showStatus: true,
                 status: Status.inReview,
               ),

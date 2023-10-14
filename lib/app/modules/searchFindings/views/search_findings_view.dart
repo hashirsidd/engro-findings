@@ -51,12 +51,12 @@ class SearchFindingsView extends GetView<SearchFindingsController> {
                   onTap: () {
                     Get.to(() => const FindingDetailsView());
                   },
-                  child: const FindingsCard()),
+                  child:   FindingsCard()),
               GestureDetector(
                   onTap: () {
                     Get.to(() => const FindingDetailsView());
                   },
-                  child: const FindingsCard()),
+                  child:   FindingsCard()),
             ],
           ),
         ),

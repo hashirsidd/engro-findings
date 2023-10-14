@@ -20,10 +20,12 @@ class FindingsModel {
   String solution;
   String prevention;
   List images;
-  int status; //1 = accepted,0 = rejected,2 = inreview
+  int status; // 0 = rejected,1 = accepted,2 = inreview
   String createdByEmail;
   String createdByUid;
+  String areaGl;
   dynamic timeStamp;
+
   FindingsModel({
     required this.title,
     required this.area,
@@ -40,6 +42,7 @@ class FindingsModel {
     required this.createdByEmail,
     required this.createdByUid,
     required this.timeStamp,
+    required this.areaGl,
   });
 
   factory FindingsModel.fromJson(Map<String, dynamic> json) => FindingsModel(
@@ -58,6 +61,7 @@ class FindingsModel {
         createdByEmail: json["createdByEmail"],
         createdByUid: json["createdByUid"],
         timeStamp: json["timeStamp"],
+        areaGl: json["areaGl"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -76,5 +80,6 @@ class FindingsModel {
         "createdByEmail": createdByEmail,
         "createdByUid": createdByUid,
         "timeStamp": timeStamp,
+        "areaGl": areaGl,
       };
 }
