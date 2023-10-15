@@ -16,6 +16,7 @@ class FindingsApprovalController extends GetxController {
 
   onTapEdit(int index) async {
     EditFindingsController editFindingsController = Get.put(EditFindingsController());
+    editFindingsController.isApprovalEdit = true;
     editFindingsController.findingIndex = index;
     editFindingsController.titleController.text = unApprovedFindings[index].title;
     editFindingsController.area.value = unApprovedFindings[index].area;

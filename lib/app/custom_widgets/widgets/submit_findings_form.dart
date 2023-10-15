@@ -231,22 +231,24 @@ class SubmitFindingsForm extends StatelessWidget {
                                           progressIndicatorBuilder:
                                               (context, url, downloadProgress) {
                                             if (downloadProgress == null) {
-                                              return SizedBox();
+                                              return const SizedBox();
                                             }
                                             return Center(
                                               child: SizedBox(
                                                 width: 30,
                                                 height: 30,
                                                 child: CircularProgressIndicator(
-                                                    strokeWidth: 2,
-                                                    value: downloadProgress.totalSize != null
-                                                        ? downloadProgress.totalSize! /
-                                                            downloadProgress.downloaded
-                                                        : null),
+                                                  strokeWidth: 2,
+                                                  value: downloadProgress.totalSize != null
+                                                      ? downloadProgress.totalSize! /
+                                                          downloadProgress.downloaded
+                                                      : null,
+                                                ),
                                               ),
                                             );
                                           },
-                                          errorWidget: (context, url, error) => Icon(Icons.error),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
                                         )
                                       : Image.memory(
                                           controller.images[index],

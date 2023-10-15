@@ -21,6 +21,7 @@ class FindingsCard extends StatelessWidget {
   final String area;
   final String tag;
   final String category;
+  Function? onTapEdit;
 
   FindingsCard({
     Key? key,
@@ -32,6 +33,7 @@ class FindingsCard extends StatelessWidget {
     this.area = '',
     this.tag = '',
     this.category = '',
+    this.onTapEdit,
   }) : super(key: key);
 
   @override
@@ -186,7 +188,11 @@ class FindingsCard extends StatelessWidget {
                 const Spacer(),
                 if (status == Status.inReview)
                   GestureDetector(
-                    onTap: () => Get.toNamed(Routes.EDIT_SUBMITTED_FINDINGS),
+                    onTap: () {
+                      if (onTapEdit != null) {
+                        onTapEdit!();
+                      }
+                    },
                     child: const Icon(
                       Icons.edit_outlined,
                     ),

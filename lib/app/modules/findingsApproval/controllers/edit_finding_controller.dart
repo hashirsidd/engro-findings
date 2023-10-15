@@ -3,16 +3,16 @@ import 'package:Findings/app/custom_widgets/widgets/customSnackbar.dart';
 import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/modules/fileFindings/controllers/file_findings_controller.dart';
 import 'package:Findings/app/modules/findingsApproval/controllers/findings_approval_controller.dart';
+import 'package:Findings/app/modules/submittedFindings/controllers/submitted_findings_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
-import '../../../custom_widgets/dialogs/submit_dialog.dart';
 import '../../../routes/app_pages.dart';
 
 class EditFindingsController extends FindingsController {
   int findingIndex = 0;
+  bool isApprovalEdit = true;
 
   @override
   onPressSubmit() async {
@@ -29,8 +29,8 @@ class EditFindingsController extends FindingsController {
         areaGlController.text.trim().isEmpty) {
       CustomGetxWidgets.CustomSnackbar('Error', 'All Fields are required!');
     } else {
-      Get.dialog(LoadingDialog());
-      FindingsApprovalController findingsApprovalController = Get.find();
+      Get.dialog(const LoadingDialog());
+
       if (images.isNotEmpty) {
         for (int i = 0; i < images.length; i++) {
           if (images[i] is! String) {
@@ -66,16 +66,33 @@ class EditFindingsController extends FindingsController {
         areaGl: areaGlController.text.trim(),
       );
       try {
-        await FirebaseFirestore.instance
-            .collection('findings')
-            .doc(findingsApprovalController.findingsId[findingIndex])
-            .set(finding.toJson());
-        findingsApprovalController.unApprovedFindings[findingIndex] =
-            FindingsModel.fromJson(finding.toJson());
-        findingsApprovalController.unApprovedFindings.refresh();
-        super.dispose();
-        Get.back();
-        Get.until((route) => route.settings.name == Routes.FINDINGS_APPROVAL);
+        if (isApprovalEdit) {
+          FindingsApprovalController findingsApprovalController = Get.find();
+
+          await FirebaseFirestore.instance
+              .collection('findings')
+              .doc(findingsApprovalController.findingsId[findingIndex])
+              .set(finding.toJson());
+          findingsApprovalController.unApprovedFindings[findingIndex] =
+              FindingsModel.fromJson(finding.toJson());
+          findingsApprovalController.unApprovedFindings.refresh();
+          super.dispose();
+          Get.back();
+          Get.until((route) => route.settings.name == Routes.FINDINGS_APPROVAL);
+        } else {
+          SubmittedFindingsController submittedFindingsController = Get.find();
+
+          await FirebaseFirestore.instance
+              .collection('findings')
+              .doc(submittedFindingsController.findingsId[findingIndex])
+              .set(finding.toJson());
+          submittedFindingsController.myFindings[findingIndex] =
+              FindingsModel.fromJson(finding.toJson());
+          submittedFindingsController.myFindings.refresh();
+          super.dispose();
+          Get.back();
+          Get.back();
+        }
       } catch (e) {
         Get.back();
         CustomGetxWidgets.CustomSnackbar('Error', 'Please try again!', color: Colors.red);

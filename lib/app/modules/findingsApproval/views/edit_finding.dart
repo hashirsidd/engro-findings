@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Findings/app/custom_widgets/widgets/appBar.dart';
 
-import '../controllers/edit_finding_controller.dart';
+import 'package:Findings/app/modules/findingsApproval/controllers/edit_finding_controller.dart';
 
 class EditFindingsView extends GetView {
   late final EditFindingsController controller;
 
-  EditFindingsView() {
-    this.controller = Get.find();
+  EditFindingsView({Key? key}) : super(key: key) {
+    controller = Get.find();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Edit YOUR FINDINGS',
+        title: 'Edit FINDINGS',
       ),
       body: GestureDetector(
         onTap: () {
