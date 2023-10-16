@@ -34,6 +34,7 @@ class FindingsApprovalController extends GetxController {
     editFindingsController.images.value = List.from(unApprovedFindings[index].images);
     print(editFindingsController.images.length);
     print(unApprovedFindings[index].images.length);
+
     Get.to(() => EditFindingsView());
   }
 
@@ -66,6 +67,12 @@ class FindingsApprovalController extends GetxController {
           .collection('findings')
           .doc(findingsId[index])
           .update({'isApproved': 1});
+
+      await FirebaseFirestore.instance.collection('overview').doc('graph').set({
+        "${unApprovedFindings[index].area.toLowerCase()} ${unApprovedFindings[index].category.toLowerCase()}":
+            FieldValue.increment(1)
+      }, SetOptions(merge: true));
+
       Get.back();
       Get.back();
       await loadData();

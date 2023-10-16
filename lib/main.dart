@@ -34,4 +34,7 @@ void main() async {
   );
 }
 ///todo
-/// add graph stats in firebase when approving any findings
+/// add graph stats in firebase when approving any findings :done
+/// add pinned finding
+/// add delete finding
+/// add passowrd reset

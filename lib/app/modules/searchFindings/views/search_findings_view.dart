@@ -49,12 +49,12 @@ class SearchFindingsView extends GetView<SearchFindingsController> {
               Spacing.vExtraLarge,
               GestureDetector(
                   onTap: () {
-                    Get.to(() => const FindingDetailsView());
+                    // Get.to(() => const FindingDetailsView());
                   },
                   child:   FindingsCard()),
               GestureDetector(
                   onTap: () {
-                    Get.to(() => const FindingDetailsView());
+                    // Get.to(() => const FindingDetailsView());
                   },
                   child:   FindingsCard()),
             ],

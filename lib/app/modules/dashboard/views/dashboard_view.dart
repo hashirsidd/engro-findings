@@ -82,21 +82,29 @@ class DashboardView extends GetView<DashboardController> {
                   style: TextStyle(fontSize: 28),
                 ),
                 Spacing.vLarge,
-                GestureDetector(
-                    onTap: () {
-                      Get.to(() => const FindingDetailsView());
-                    },
-                    child: FindingsCard()),
-                GestureDetector(
-                    onTap: () {
-                      Get.to(() => const FindingDetailsView());
-                    },
-                    child: FindingsCard()),
-                GestureDetector(
-                    onTap: () {
-                      Get.to(() => const FindingDetailsView());
-                    },
-                    child: FindingsCard()),
+                Obx(
+                  () => controller.findings.isEmpty
+                      ? const Text(
+                          'No Findings',
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int i) {
+                            return GestureDetector(
+                                onTap: () => controller.onTapCard(i),
+                                child: FindingsCard(
+                                  title: controller.findings[i].title,
+                                  description: controller.findings[i].problem,
+                                  tag: controller.findings[i].equipmentTag,
+                                  category: controller.findings[i].category,
+                                  area: controller.findings[i].area,
+                                  date: controller.findings[i].date,
+                                ));
+                          },
+                          itemCount: controller.findings.length,
+                        ),
+                )
               ],
             ),
           ),

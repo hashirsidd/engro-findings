@@ -16,7 +16,7 @@ class EditFindingsView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Edit FINDINGS',
+        title: 'EDIT FINDING',
       ),
       body: GestureDetector(
         onTap: () {

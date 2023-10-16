@@ -14,25 +14,25 @@ class SubmittedFindingsView extends GetView<SubmittedFindingsController> {
         appBar: const CustomAppBar(
           title: 'SUBMITTED FINDINGS',
         ),
-        floatingActionButton: Container(
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.grey,
-                offset: Offset(0.0, 1.0),
-                blurRadius: 7.0,
-              ),
-            ],
-            color: Colors.green,
-            borderRadius: BorderRadius.circular(150),
-          ),
-          child: const Icon(
-            Icons.download,
-            color: Colors.white,
-            size: 31,
-          ),
-        ),
+        // floatingActionButton: Container(
+        //   padding: const EdgeInsets.all(14),
+        //   decoration: BoxDecoration(
+        //     boxShadow: const [
+        //       BoxShadow(
+        //         color: Colors.grey,
+        //         offset: Offset(0.0, 1.0),
+        //         blurRadius: 7.0,
+        //       ),
+        //     ],
+        //     color: Colors.green,
+        //     borderRadius: BorderRadius.circular(150),
+        //   ),
+        //   child: const Icon(
+        //     Icons.download,
+        //     color: Colors.white,
+        //     size: 31,
+        //   ),
+        // ),
         body: Obx(
           () => controller.myFindings.isEmpty && controller.isLoading.value == false
               ? const Center(
@@ -44,9 +44,7 @@ class SubmittedFindingsView extends GetView<SubmittedFindingsController> {
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8.0),
                   itemBuilder: (BuildContext context, int i) {
                     return GestureDetector(
-                        onTap: () {
-                          Get.to(() => const FindingDetailsView());
-                        },
+                        onTap: () => controller.onTapCard(i),
                         child: FindingsCard(
                           title: controller.myFindings[i].title,
                           description: controller.myFindings[i].problem,

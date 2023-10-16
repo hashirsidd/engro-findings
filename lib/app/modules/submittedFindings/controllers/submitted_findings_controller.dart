@@ -1,6 +1,7 @@
 import 'package:Findings/app/custom_widgets/dialogs/loading_dialog.dart';
 import 'package:Findings/app/custom_widgets/widgets/customSnackbar.dart';
 import 'package:Findings/app/data/findings_model.dart';
+import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,20 @@ import 'package:Findings/app/custom_widgets/widgets/findings_card.dart';
 import 'package:Findings/app/modules/findingsApproval/controllers/edit_finding_controller.dart';
 import 'package:Findings/app/modules/findingsApproval/views/edit_finding.dart';
 
+import '../../searchFindings/views/findings_details_view.dart';
+
 class SubmittedFindingsController extends GetxController {
   RxList<FindingsModel> myFindings = <FindingsModel>[].obs;
   RxBool isLoading = false.obs;
   List<String> findingsId = [];
+
+  onTapCard(int i) async {
+    HomeController homeController = Get.find();
+    Get.to(() => FindingDetailsView(
+          user: homeController.user.value,
+          finding: myFindings[i],
+        ));
+  }
 
   onTapEdit(int index) async {
     EditFindingsController editFindingsController = Get.put(EditFindingsController());
