@@ -9,8 +9,21 @@ import 'package:get/get.dart';
 import '../../../custom_widgets/dialogs/loading_dialog.dart';
 import '../../../custom_widgets/widgets/customSnackbar.dart';
 
+class ChartData {
+  ChartData(
+    this.x,
+    this.y1,
+    this.y2,
+  );
+
+  final String x;
+  final int y1;
+  final int y2;
+}
+
 class DashboardController extends GetxController {
   RxList<FindingsModel> findings = <FindingsModel>[].obs;
+  RxList<ChartData> chartData = <ChartData>[].obs;
 
   Future<UserModel?> getUserDetails(String uid) async {
     UserModel? user;
@@ -74,6 +87,24 @@ class DashboardController extends GetxController {
         findingsData.docs.forEach((element) {
           findings.add(FindingsModel.fromJson(element.data()));
         });
+      }
+      DocumentSnapshot<Map<String, dynamic>> overview =
+          await FirebaseFirestore.instance.collection('overview').doc('graph').get();
+      if (overview.data() != null) {
+        chartData.add(ChartData(
+            'PM&S', overview.data()!["pm&s stationary"], overview.data()!["pm&s machinery"]));
+        chartData.add(ChartData(
+            'URUT I', overview.data()!["urut-i stationary"], overview.data()!["urut-i machinery"]));
+        chartData.add(ChartData('UREA II', overview.data()!["urea-ii stationary"],
+            overview.data()!["urea-ii machinery"]));
+        chartData.add(ChartData('URUT III', overview.data()!["urut-iii stationary"],
+            overview.data()!["urut-iii machinery"]));
+        chartData.add(ChartData(
+            'AMM II', overview.data()!["amm-ii stationary"], overview.data()!["amm-ii machinery"]));
+        chartData.add(ChartData('AMM III', overview.data()!["amm-iii stationary"],
+            overview.data()!["amm-iii machinery"]));
+        chartData.add(ChartData('WORK SHOP', overview.data()!["workshop stationary"],
+            overview.data()!["workshop machinery"]));
       }
       Get.back();
     } catch (e) {

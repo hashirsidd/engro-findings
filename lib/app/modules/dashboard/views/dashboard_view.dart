@@ -7,6 +7,7 @@ import 'package:Findings/app/modules/dashboard/controllers/dashboard_controller.
 import 'package:Findings/app/custom_widgets/widgets/chart.dart';
 
 import 'package:Findings/app/custom_widgets/widgets/findings_card.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardView extends GetView<DashboardController> {
   const DashboardView({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class DashboardView extends GetView<DashboardController> {
                 ),
                 Spacing.vLarge,
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -72,9 +73,44 @@ class DashboardView extends GetView<DashboardController> {
                       ),
                     ],
                   ),
-                  child: CustomStackedColumnChart(
-                    controller: controller,
-                  ),
+                  height: 350,
+                  child: Obx(() => SfCartesianChart(
+                          primaryXAxis: CategoryAxis(
+                              labelsExtent: 100,
+                              labelAlignment: LabelAlignment.center,
+                              labelRotation: 0,
+                              labelIntersectAction: AxisLabelIntersectAction.multipleRows,
+                              majorGridLines: MajorGridLines(width: 0)),
+                          series: <ChartSeries>[
+                            StackedColumnSeries<ChartData, String>(
+                                dataLabelSettings: const DataLabelSettings(
+                                    isVisible: true,
+                                    labelAlignment: ChartDataLabelAlignment.middle,
+                                    showCumulativeValues: false,
+                                    showZeroValue: false,
+                                    textStyle: TextStyle(
+                                      color: Colors.white,
+                                    )),
+                                dataSource: controller.chartData.value,
+                                color: Colors.green,
+                                xValueMapper: (ChartData data, _) => data.x,
+                                yValueMapper: (ChartData data, _) => data.y1),
+                            StackedColumnSeries<ChartData, String>(
+                                dataLabelSettings: const DataLabelSettings(
+                                    isVisible: true,
+                                    labelAlignment: ChartDataLabelAlignment.middle,
+                                    showCumulativeValues: false,
+                                    showZeroValue: false,
+                                    textStyle: TextStyle(
+                                      color: Colors.white,
+                                    )),
+                                dataSource: controller.chartData.value,
+                                borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(5), topLeft: Radius.circular(5)),
+                                color: const Color.fromRGBO(3, 75, 8, 1.0),
+                                xValueMapper: (ChartData data, _) => data.x,
+                                yValueMapper: (ChartData data, _) => data.y2),
+                          ])),
                 ),
                 Spacing.vLarge,
                 const Text(
@@ -89,7 +125,7 @@ class DashboardView extends GetView<DashboardController> {
                         )
                       : ListView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int i) {
                             return GestureDetector(
                                 onTap: () => controller.onTapCard(i),
