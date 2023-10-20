@@ -19,17 +19,16 @@ class UserModel {
   String profilePictureUrl;
   bool notifications;
 
-  UserModel({
-    this.name = '',
-    this.email = '',
-    this.uid = '',
-    this.employeeCode = '',
-    this.area = '',
-    this.isLoginAllowed = true,
-    this.isAdmin = false,
-    this.profilePictureUrl = '',
-    this.notifications = true,
-  });
+  UserModel(
+      {this.name = '',
+      this.email = '',
+      this.uid = '',
+      this.employeeCode = '',
+      this.area = '',
+      this.isLoginAllowed = true,
+      this.isAdmin = false,
+      this.profilePictureUrl = '',
+      this.notifications = true, });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         name: json["name"],

@@ -9,6 +9,8 @@ class SubmitDialog extends StatelessWidget {
   final Function rightButtonOnTap;
   final Function leftButtonOnTap;
   final Widget titleWidget;
+  final Color titleTextColor;
+  final Icon titleIcon;
 
   const SubmitDialog({
     Key? key,
@@ -19,6 +21,8 @@ class SubmitDialog extends StatelessWidget {
     required this.rightButtonOnTap,
     required this.leftButtonOnTap,
     this.titleWidget = const SizedBox(),
+    this.titleIcon = const Icon(Icons.check, color: Colors.green, size: 100),
+    this.titleTextColor = Colors.green,
   }) : super(key: key);
 
   @override
@@ -45,11 +49,7 @@ class SubmitDialog extends StatelessWidget {
                 },
               ),
             ),
-            const Icon(
-              Icons.check,
-              color: Colors.green,
-              size: 100,
-            ),
+            titleIcon,
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -57,19 +57,13 @@ class SubmitDialog extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(color: Colors.green),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(color: titleTextColor),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
                   Text(
                     description,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.black54),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
@@ -80,19 +74,15 @@ class SubmitDialog extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () => leftButtonOnTap(),
                           style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.green),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
                           ),
-                          child: Text(leftButtonText,
-                              style: const TextStyle(color: Colors.green)),
+                          child: Text(leftButtonText, style: TextStyle(color: titleTextColor)),
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -101,7 +91,7 @@ class SubmitDialog extends StatelessWidget {
                           onPressed: () => rightButtonOnTap(),
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: Colors.green,
+                            backgroundColor: titleTextColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0),
                             ),

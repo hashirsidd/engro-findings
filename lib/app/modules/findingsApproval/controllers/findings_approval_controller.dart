@@ -32,8 +32,7 @@ class FindingsApprovalController extends GetxController {
     editFindingsController.areaGlController.text = unApprovedFindings[index].areaGl;
     editFindingsController.createdByController.text = unApprovedFindings[index].createdByEmail;
     editFindingsController.images.value = List.from(unApprovedFindings[index].images);
-    print(editFindingsController.images.length);
-    print(unApprovedFindings[index].images.length);
+    editFindingsController.findingId = unApprovedFindings[index].id;
 
     Get.to(() => EditFindingsView());
   }
@@ -97,6 +96,7 @@ class FindingsApprovalController extends GetxController {
             onTapApprove: () => onTapApprove(i),
             onTapReject: () => onTapReject(i),
             onTapEdit: () => onTapEdit(i),
+            reload: loadData,
           ));
     }
   }

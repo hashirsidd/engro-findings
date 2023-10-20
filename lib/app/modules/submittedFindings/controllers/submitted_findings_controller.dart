@@ -18,11 +18,13 @@ class SubmittedFindingsController extends GetxController {
   RxBool isLoading = false.obs;
   List<String> findingsId = [];
 
+
   onTapCard(int i) async {
     HomeController homeController = Get.find();
     Get.to(() => FindingDetailsView(
           user: homeController.user.value,
           finding: myFindings[i],
+          reload: loadData,
         ));
   }
 
@@ -44,6 +46,7 @@ class SubmittedFindingsController extends GetxController {
     editFindingsController.areaGlController.text = myFindings[index].areaGl;
     editFindingsController.createdByController.text = myFindings[index].createdByEmail;
     editFindingsController.images.value = List.from(myFindings[index].images);
+    editFindingsController.findingId = myFindings[index].id;
     Get.to(() => EditFindingsView());
   }
 

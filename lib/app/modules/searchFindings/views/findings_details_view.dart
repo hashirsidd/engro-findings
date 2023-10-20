@@ -8,11 +8,13 @@ import '../../../custom_widgets/widgets/appBar.dart';
 class FindingDetailsView extends StatelessWidget {
   final FindingsModel finding;
   final UserModel user;
+  final Function reload;
 
   const FindingDetailsView({
     Key? key,
     required this.finding,
     required this.user,
+    required this.reload,
   }) : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class FindingDetailsView extends StatelessWidget {
         child: FindingDetailsWidget(
           user: user,
           finding: finding,
+          reload: reload,
         ),
       ),
     );

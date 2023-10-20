@@ -49,6 +49,7 @@ class DashboardController extends GetxController {
       Get.to(() => FindingDetailView(
             user: user,
             finding: findings[i],
+            reload: loadData,
           ));
     }
   }
@@ -77,6 +78,9 @@ class DashboardController extends GetxController {
   Future<void> loadData() async {
     try {
       Get.dialog(LoadingDialog());
+      print("here");
+      findings.clear();
+      chartData.clear();
       QuerySnapshot<Map<String, dynamic>> findingsData = await FirebaseFirestore.instance
           .collection('findings')
           .where('isApproved', isEqualTo: 1)
@@ -106,6 +110,7 @@ class DashboardController extends GetxController {
         chartData.add(ChartData('WORK SHOP', overview.data()!["workshop stationary"],
             overview.data()!["workshop machinery"]));
       }
+      findings.refresh();
       Get.back();
     } catch (e) {
       Get.back();

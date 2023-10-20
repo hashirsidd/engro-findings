@@ -12,6 +12,7 @@ class ApproveRejectFindingView extends GetView {
   final Function onTapApprove;
   final Function onTapReject;
   final Function onTapEdit;
+  final Function reload;
 
   const ApproveRejectFindingView({
     required this.finding,
@@ -19,6 +20,7 @@ class ApproveRejectFindingView extends GetView {
     required this.onTapApprove,
     required this.onTapReject,
     required this.onTapEdit,
+    required this.reload,
     Key? key,
   }) : super(key: key);
 
@@ -35,6 +37,7 @@ class ApproveRejectFindingView extends GetView {
             child: FindingDetailsWidget(
               user: user,
               finding: finding,
+              reload: reload,
             ),
           ),
           Align(

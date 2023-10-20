@@ -1,6 +1,7 @@
 import 'package:Findings/app/custom_widgets/widgets/image_viewer.dart';
 import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/data/user_model.dart';
+import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,13 @@ import 'package:get/get_core/src/get_main.dart';
 class FindingDetailsWidget extends StatelessWidget {
   final FindingsModel finding;
   final UserModel user;
+  final Function reload;
 
   FindingDetailsWidget({
     Key? key,
     required this.finding,
     required this.user,
+    required this.reload,
   }) : super(key: key);
 
   @override
@@ -64,13 +67,45 @@ class FindingDetailsWidget extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              Text(
-                finding.date,
-                style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey,
-                    fontStyle: FontStyle.italic),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    finding.date,
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                        fontStyle: FontStyle.italic),
+                  ),
+                  Spacing.vStandard,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.share,
+                        color: Colors.black54,
+                      ),
+                      Spacing.hLarge,
+                      Icon(
+                        Icons.save_alt,
+                        color: Colors.black54,
+                      ),
+                      if (user.isAdmin) ...[
+                        Spacing.hLarge,
+                        GestureDetector(
+                          onTap: () {
+                            HomeController.deleteFindingDialog(finding.id, reload);
+                          },
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ]
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

@@ -37,6 +37,7 @@ class FindingsController extends GetxController {
   RxString date = ''.obs;
   RxList images = [].obs;
 
+  String findingId = '';
   HomeController homeController = Get.find();
 
   onPressSubmit() {}
@@ -144,7 +145,8 @@ class FileFindingsController extends FindingsController {
           }
         }
       }
-
+      DocumentReference<Map<String, dynamic>> ref =
+          FirebaseFirestore.instance.collection('findings').doc();
       FindingsModel findings = FindingsModel(
         title: titleController.text.trim(),
         area: area.value,
@@ -162,10 +164,12 @@ class FileFindingsController extends FindingsController {
         createdByUid: homeController.user.value.uid,
         timeStamp: FieldValue.serverTimestamp(),
         areaGl: areaGlController.text.trim(),
+        id: ref.id,
+        pinned: false,
       );
       debugPrint(findings.toJson().toString());
       try {
-        await FirebaseFirestore.instance.collection('findings').add(findings.toJson());
+        await ref.set(findings.toJson());
         await FirebaseFirestore.instance
             .collection('newFindings')
             .doc('newFindings')

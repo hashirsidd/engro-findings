@@ -64,6 +64,8 @@ class EditFindingsController extends FindingsController {
         createdByUid: homeController.user.value.uid,
         timeStamp: FieldValue.serverTimestamp(),
         areaGl: areaGlController.text.trim(),
+        id: 'l',
+        pinned: false,
       );
       try {
         if (isApprovalEdit) {

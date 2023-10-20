@@ -24,6 +24,8 @@ class FindingsModel {
   String createdByEmail;
   String createdByUid;
   String areaGl;
+  String id;
+  bool pinned;
   dynamic timeStamp;
 
   FindingsModel({
@@ -43,6 +45,8 @@ class FindingsModel {
     required this.createdByUid,
     required this.timeStamp,
     required this.areaGl,
+    required this.id,
+    required this.pinned,
   });
 
   factory FindingsModel.fromJson(Map<String, dynamic> json) => FindingsModel(
@@ -62,6 +66,8 @@ class FindingsModel {
         createdByUid: json["createdByUid"],
         timeStamp: json["timeStamp"],
         areaGl: json["areaGl"],
+        id: json["id"],
+        pinned: json["pinned"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,5 +87,7 @@ class FindingsModel {
         "createdByUid": createdByUid,
         "timeStamp": timeStamp,
         "areaGl": areaGl,
+        'id': id,
+        'pinned': pinned,
       };
 }

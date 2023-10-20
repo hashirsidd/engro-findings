@@ -9,10 +9,12 @@ import 'package:Findings/app/custom_widgets/widgets/appBar.dart';
 class FindingDetailView extends GetView {
   final FindingsModel finding;
   final UserModel user;
+  final Function reload;
 
   const FindingDetailView({
     required this.finding,
     required this.user,
+    required this.reload,
     Key? key,
   }) : super(key: key);
 
@@ -25,8 +27,9 @@ class FindingDetailView extends GetView {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8.0),
         child: FindingDetailsWidget(
-          user: user,
-          finding: finding,
+            user: user,
+            finding: finding,
+            reload: reload,
         ),
       ),
     );
