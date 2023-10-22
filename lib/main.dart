@@ -34,7 +34,8 @@ void main() async {
   );
 }
 ///todo
-/// add graph stats in firebase when approving any findings :done
-/// add pinned finding
-/// add delete finding
-/// add passowrd reset
+/// implement manage users
+/// add pinned finding option
+/// add share finding option work on create pdf and download or share
+/// add download all
+/// add search

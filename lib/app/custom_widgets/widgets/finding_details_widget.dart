@@ -12,7 +12,7 @@ class FindingDetailsWidget extends StatelessWidget {
   final FindingsModel finding;
   final UserModel user;
   final Function reload;
-
+  final HomeController homeController = Get.find();
   FindingDetailsWidget({
     Key? key,
     required this.finding,
@@ -91,7 +91,7 @@ class FindingDetailsWidget extends StatelessWidget {
                         Icons.save_alt,
                         color: Colors.black54,
                       ),
-                      if (user.isAdmin) ...[
+                      if ((homeController.user.value.isAdmin )|| (user.uid == finding.createdByUid && finding.status != 1)) ...[
                         Spacing.hLarge,
                         GestureDetector(
                           onTap: () {

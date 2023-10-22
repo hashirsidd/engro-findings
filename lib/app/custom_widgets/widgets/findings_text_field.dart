@@ -9,7 +9,7 @@ class FindingsTextField extends StatelessWidget {
   final bool enabled;
   final FocusNode? nextFocus;
   final FocusNode? currentFocus;
-
+  final Color textColor;
   const FindingsTextField({
     Key? key,
     required this.textEditingController,
@@ -19,6 +19,7 @@ class FindingsTextField extends StatelessWidget {
     this.maxLines = 10,
     this.enabled = true,
     this.currentFocus,
+    this.textColor = Colors.black87,
   }) : super(key: key);
 
   @override
@@ -54,13 +55,11 @@ class FindingsTextField extends StatelessWidget {
               controller: textEditingController,
               focusNode: currentFocus,
               autocorrect: false,
-              textInputAction: nextFocus != null
-                  ? TextInputAction.next
-                  : TextInputAction.done,
+              textInputAction: nextFocus != null ? TextInputAction.next : TextInputAction.done,
               onFieldSubmitted: (_) => nextFocus != null
                   ? FocusScope.of(context).requestFocus(nextFocus)
                   : FocusScope.of(context).unfocus(),
-              style: const TextStyle(color: Colors.black87),
+              style: TextStyle(color: textColor),
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hint,

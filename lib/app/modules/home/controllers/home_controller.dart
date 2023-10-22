@@ -1,5 +1,6 @@
 import 'package:Findings/app/custom_widgets/dialogs/loading_dialog.dart';
 import 'package:Findings/app/custom_widgets/widgets/customSnackbar.dart';
+import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/data/user_model.dart';
 import 'package:Findings/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,10 +15,109 @@ class HomeController extends GetxController {
   Rx<UserModel> user = UserModel().obs;
   RxInt newFindings = 0.obs;
 
+  FocusNode newPasswordFocus = FocusNode();
+  FocusNode oldPasswordFocus = FocusNode();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController oldPasswordController = TextEditingController();
+
+  changeNotificationStatus() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.value.uid)
+        .update({'notifications': user.value.notifications});
+  }
+
+  onPressChangePassword() async {
+    if (oldPasswordController.text.trim().isEmpty || newPasswordController.text.trim().isEmpty) {
+      CustomGetxWidgets.CustomSnackbar('Error', "All fields are required!");
+    } else if (newPasswordController.text.trim().length < 8) {
+      CustomGetxWidgets.CustomSnackbar('Error', "Passwords length must be at least 8 characters!");
+    } else {
+      Get.dialog(LoadingDialog(), barrierDismissible: false);
+      try {
+        AuthCredential credential = EmailAuthProvider.credential(
+          email: this.user.value.email,
+          password: oldPasswordController.text.trim(),
+        );
+
+        UserCredential userCredential =
+            await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(credential);
+        if (userCredential.user != null) {
+          try {
+            await FirebaseAuth.instance.currentUser!
+                .updatePassword(newPasswordController.text.trim());
+            Get.back();
+            Get.back();
+            CustomGetxWidgets.CustomSnackbar('Success', "Your passwords has been changed!");
+          } catch (e) {
+            print(e);
+            throw "Unable to create user data";
+          }
+        } else {
+          throw "User creation failed!";
+        }
+      } on FirebaseAuthException catch (e) {
+        print(e);
+        Get.back();
+        Get.back();
+        if (e.code == 'email-already-in-use') {
+          CustomGetxWidgets.CustomSnackbar(
+            'Error',
+            "User already exists",
+            color: Colors.red,
+          );
+        }
+        if (e.code == 'invalid-email') {
+          CustomGetxWidgets.CustomSnackbar(
+            'Error',
+            "Invalid email",
+            color: Colors.red,
+          );
+        } else if (e.code == 'weak-password') {
+          CustomGetxWidgets.CustomSnackbar(
+            'Error',
+            "Weak password",
+            color: Colors.red,
+          );
+        } else if (e.code == 'wrong-password') {
+          CustomGetxWidgets.CustomSnackbar(
+            'Error',
+            "Wrong password",
+            color: Colors.red,
+          );
+        } else {
+          CustomGetxWidgets.CustomSnackbar(
+            'Error',
+            'An error occurred: ${e.message}',
+            color: Colors.red,
+          );
+        }
+      } catch (e) {
+        print(e);
+        Get.back();
+        Get.back();
+        CustomGetxWidgets.CustomSnackbar(
+          'Error',
+          "Unable to create user!\nUnexpected error occurred!",
+          color: Colors.red,
+        );
+      }
+    }
+  }
+
   static deleteFinding(String id, Function reload) async {
     Get.dialog(LoadingDialog());
     bool hasException = false;
     try {
+      DocumentSnapshot<Map<String, dynamic>> finding =
+          await FirebaseFirestore.instance.collection('findings').doc(id).get();
+      if (finding.data() != null) {
+        FindingsModel findingsModel = FindingsModel.fromJson(finding.data()!);
+        await FirebaseFirestore.instance.collection('overview').doc('graph').set({
+          "${findingsModel.area.toLowerCase()} ${findingsModel.category.toLowerCase()}":
+              FieldValue.increment(-1)
+        }, SetOptions(merge: true));
+      }
       await FirebaseFirestore.instance.collection('findings').doc(id).delete();
     } catch (e) {
       print(e);

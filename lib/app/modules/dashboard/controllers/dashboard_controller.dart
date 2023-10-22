@@ -78,7 +78,6 @@ class DashboardController extends GetxController {
   Future<void> loadData() async {
     try {
       Get.dialog(LoadingDialog());
-      print("here");
       findings.clear();
       chartData.clear();
       QuerySnapshot<Map<String, dynamic>> findingsData = await FirebaseFirestore.instance

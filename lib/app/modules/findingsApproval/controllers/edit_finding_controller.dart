@@ -70,7 +70,10 @@ class EditFindingsController extends FindingsController {
       try {
         if (isApprovalEdit) {
           FindingsApprovalController findingsApprovalController = Get.find();
-
+          finding.createdByUid =
+              findingsApprovalController.unApprovedFindings[findingIndex].createdByUid;
+          finding.createdByEmail =
+              findingsApprovalController.unApprovedFindings[findingIndex].createdByEmail;
           await FirebaseFirestore.instance
               .collection('findings')
               .doc(findingsApprovalController.findingsId[findingIndex])

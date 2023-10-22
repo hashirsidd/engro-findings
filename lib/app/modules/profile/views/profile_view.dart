@@ -2,6 +2,7 @@ import 'package:Findings/app/custom_widgets/widgets/appBar.dart';
 import 'package:Findings/app/custom_widgets/widgets/drop_down.dart';
 import 'package:Findings/app/custom_widgets/widgets/findings_text_field.dart';
 import 'package:Findings/app/utils/spacing.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -34,25 +35,69 @@ class ProfileView extends GetView<ProfileController> {
               onTap: () {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
-              child: ListView(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    Center(
-                      child: Stack(
-                        children: [
-                          Container(
+              child: ListView(shrinkWrap: true, physics: const BouncingScrollPhysics(), children: [
+                Center(
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 140,
+                        width: 140,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(150),
+                            border: Border.all(color: Colors.black12, width: 2)),
+                        child: Container(
                             height: 140,
                             width: 140,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(150),
-                                border:
-                                    Border.all(color: Colors.black12, width: 2)),
-                            child: Container(
-                              height: 140,
-                              width: 140,
+                              borderRadius: BorderRadius.circular(150),
+                              color: Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(0.0, 0.0),
+                                  blurRadius: 7.0,
+                                ),
+                              ],
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Obx(
+                              () => controller.homeController.user.value.profilePictureUrl != ""
+                                  ? CachedNetworkImage(
+                                      imageUrl:
+                                          controller.homeController.user.value.profilePictureUrl,
+                                      fit: BoxFit.cover,
+                                      progressIndicatorBuilder: (context, url, downloadProgress) {
+                                        if (downloadProgress == null) {
+                                          return const SizedBox();
+                                        }
+                                        return const Center(
+                                          child: SizedBox(
+                                            width: 30,
+                                            height: 30,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  : Image.asset(
+                                      'assets/user.png',
+                                    ),
+                            )),
+                      ),
+                      Positioned(
+                        bottom: 5,
+                        right: 5,
+                        child: GestureDetector(
+                          onTap: controller.onPressChangeProfilePicture,
+                          child: Container(
+                              height: 30,
+                              width: 30,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(150),
+                                color: Colors.white,
                                 boxShadow: const [
                                   BoxShadow(
                                     color: Colors.grey,
@@ -61,84 +106,47 @@ class ProfileView extends GetView<ProfileController> {
                                   ),
                                 ],
                               ),
-                              clipBehavior: Clip.hardEdge,
-                              child: Image.network(
-                                'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1600',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 5,
-                            right: 5,
-                            child: Container(
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(150),
-                                  color: Colors.white,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      offset: Offset(0.0, 0.0),
-                                      blurRadius: 7.0,
-                                    ),
-                                  ],
-                                ),
-                                child: const Icon(
-                                  Icons.edit_outlined,
-                                  color: Colors.grey,
-                                )),
-                          )
-                        ],
-                      ),
-                    ),
-                    FindingsTextField(
-                      textEditingController: controller.usernameController,
-                      title: 'Name',
-                      hint: 'Name',
-                      maxLines: 1,
-                      nextFocus: controller.emailFocus,
-                    ),
-                    FindingsTextField(
-                      textEditingController: controller.usernameController,
-                      title: 'Email',
-                      hint: 'Email',
-                      maxLines: 1,
-                      nextFocus: controller.codeFocus,
-                      currentFocus: controller.emailFocus,
-                    ),
-                    FindingsTextField(
-                      textEditingController: controller.usernameController,
-                      title: 'Code',
-                      hint: 'Employee Code',
-                      maxLines: 1,
-                      currentFocus: controller.codeFocus,
-                    ),
-                    DropDown(
-                      dropDownList: areaList,
-                      value: controller.area,
-                      hint: 'Select area',
-                      title: 'Area',
-                    ),
-                    Spacing.vLarge,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Notifications",
-                          style: TextStyle(fontSize: 18),
+                              child: const Icon(
+                                Icons.edit_outlined,
+                                color: Colors.grey,
+                              )),
                         ),
-                        Obx(() => Switch(
-                              value: controller.allowNotification.value,
-                              activeColor: Colors.green,
-                              onChanged: (bool value) {
-                                controller.allowNotification.value = value;
-                              },
-                            )),
-                      ],
-                    ),
-                  ]),
+                      )
+                    ],
+                  ),
+                ),
+                FindingsTextField(
+                  textEditingController: controller.usernameController,
+                  title: 'Name',
+                  hint: 'Name',
+                  maxLines: 1,
+                  nextFocus: controller.codeFocus,
+                ),
+                FindingsTextField(
+                  textEditingController: controller.userEmailController,
+                  enabled: false,
+                  title: 'Email',
+                  hint: 'Email',
+                  maxLines: 1,
+                  nextFocus: controller.codeFocus,
+                  currentFocus: controller.emailFocus,
+                  textColor: Colors.grey,
+                ),
+                FindingsTextField(
+                  textEditingController: controller.employeeCodeController,
+                  title: 'Code',
+                  hint: 'Employee Code',
+                  maxLines: 1,
+                  currentFocus: controller.codeFocus,
+                ),
+                DropDown(
+                  dropDownList: areaList,
+                  value: controller.area,
+                  hint: 'Select area',
+                  title: 'Area',
+                ),
+                Spacing.vSize(40),
+              ]),
             ),
           ),
           if (MediaQuery.of(context).viewInsets.bottom < 50)
@@ -150,12 +158,13 @@ class ProfileView extends GetView<ProfileController> {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: controller.onPressSave,
+                  onPressed: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    controller.onPressSave();
+                  },
                   style: ButtonStyle(
-                    foregroundColor:
-                    MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.green),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -163,11 +172,8 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                   ),
                   child: Text(
-                    'Create User',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: Colors.white),
+                    'Update',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
                   ),
                 ),
               ),
