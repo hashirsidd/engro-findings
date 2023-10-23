@@ -17,8 +17,8 @@ class LoadingDialog extends StatelessWidget {
         backgroundColor: Colors.transparent,
         child: const Align(
           child: SizedBox(
-            height: 120,
-            width: 120,
+            height: 60,
+            width: 60,
             child: CircularProgressIndicator(color: Colors.white),
           ),
         ));

@@ -17,8 +17,8 @@ class SubmitFindingsForm extends StatelessWidget {
     required this.controller,
   }) : super(key: key);
 
-  var categoryList = ['Machinery', 'Stationary'];
-  var areaList = ['PM&S', 'URUT-I', 'UREA-II', 'URUT-III', 'AMM-II', 'AMM-III', 'Workshop'];
+  var categoryList = ['MACHINERY', 'STATIONARY'];
+  var areaList = ['PM&S', 'URUT-I', 'UREA-II', 'URUT-III', 'AMM-II', 'AMM-III', 'WORKSHOP'];
   HomeController homeController = Get.find();
 
   @override

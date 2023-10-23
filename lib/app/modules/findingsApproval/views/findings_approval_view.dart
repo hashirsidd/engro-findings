@@ -38,7 +38,7 @@ class FindingsApprovalView extends GetView<FindingsApprovalController> {
                       onTap: () => controller.onTapCard(i),
                       child: FindingsCard(
                         title: controller.unApprovedFindings[i].title,
-                        description: controller.unApprovedFindings[i].problem,
+                        description: controller.unApprovedFindings[i].equipmentDescription,
                         tag: controller.unApprovedFindings[i].equipmentTag,
                         category: controller.unApprovedFindings[i].category,
                         area: controller.unApprovedFindings[i].area,

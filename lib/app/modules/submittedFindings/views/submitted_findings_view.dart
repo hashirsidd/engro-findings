@@ -47,7 +47,7 @@ class SubmittedFindingsView extends GetView<SubmittedFindingsController> {
                         onTap: () => controller.onTapCard(i),
                         child: FindingsCard(
                           title: controller.myFindings[i].title,
-                          description: controller.myFindings[i].problem,
+                          description: controller.myFindings[i].equipmentDescription,
                           tag: controller.myFindings[i].equipmentTag,
                           category: controller.myFindings[i].category,
                           area: controller.myFindings[i].area,

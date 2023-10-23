@@ -8,6 +8,7 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const LOGIN = _Paths.LOGIN;
   static const SEARCH_FINDINGS = _Paths.SEARCH_FINDINGS;
+  static const SEARCH_RESULT_FINDINGS = _Paths.SEARCH_RESULT_FINDINGS;
   static const DASHBOARD = _Paths.DASHBOARD;
   static const FILE_FINDINGS = _Paths.FILE_FINDINGS;
   static const SUBMITTED_FINDINGS = _Paths.SUBMITTED_FINDINGS;
@@ -24,6 +25,7 @@ abstract class _Paths {
   static const SPLASH = '/splash';
   static const LOGIN = '/login';
   static const SEARCH_FINDINGS = '/search-findings';
+  static const SEARCH_RESULT_FINDINGS = '/search-result-findings';
   static const DASHBOARD = '/dashboard';
   static const FILE_FINDINGS = '/file-findings';
   static const SUBMITTED_FINDINGS = '/submitted-findings';

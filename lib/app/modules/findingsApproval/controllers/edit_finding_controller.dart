@@ -48,12 +48,12 @@ class EditFindingsController extends FindingsController {
       }
 
       FindingsModel finding = FindingsModel(
-        title: titleController.text.trim(),
-        area: area.value,
+        title: titleController.text.trim().toLowerCase(),
+        area: area.value.toLowerCase(),
         date: date.value,
-        category: category.value,
-        equipmentTag: equipmentTagController.text.trim(),
-        equipmentDescription: equipmentDescriptionController.text.trim(),
+        category: category.value.toLowerCase(),
+        equipmentTag: equipmentTagController.text.trim().toLowerCase(),
+        equipmentDescription: equipmentDescriptionController.text.trim().toLowerCase(),
         problem: problemController.text.trim(),
         finding: findingController.text.trim(),
         solution: solutionController.text.trim(),
@@ -64,7 +64,7 @@ class EditFindingsController extends FindingsController {
         createdByUid: homeController.user.value.uid,
         timeStamp: FieldValue.serverTimestamp(),
         areaGl: areaGlController.text.trim(),
-        id: 'l',
+        id: '',
         pinned: false,
       );
       try {
@@ -74,6 +74,7 @@ class EditFindingsController extends FindingsController {
               findingsApprovalController.unApprovedFindings[findingIndex].createdByUid;
           finding.createdByEmail =
               findingsApprovalController.unApprovedFindings[findingIndex].createdByEmail;
+          finding.id = findingsApprovalController.findingsId[findingIndex];
           await FirebaseFirestore.instance
               .collection('findings')
               .doc(findingsApprovalController.findingsId[findingIndex])
@@ -86,11 +87,11 @@ class EditFindingsController extends FindingsController {
           Get.until((route) => route.settings.name == Routes.FINDINGS_APPROVAL);
         } else {
           SubmittedFindingsController submittedFindingsController = Get.find();
-
+          finding.id = submittedFindingsController.findingsId[findingIndex];
           await FirebaseFirestore.instance
               .collection('findings')
               .doc(submittedFindingsController.findingsId[findingIndex])
-              .set(finding.toJson());
+              .set(finding.toJson(), SetOptions(merge: true));
           submittedFindingsController.myFindings[findingIndex] =
               FindingsModel.fromJson(finding.toJson());
           submittedFindingsController.myFindings.refresh();

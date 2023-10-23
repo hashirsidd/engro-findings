@@ -2,6 +2,7 @@ import 'package:Findings/app/custom_widgets/widgets/image_viewer.dart';
 import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/data/user_model.dart';
 import 'package:Findings/app/modules/home/controllers/home_controller.dart';
+import 'package:Findings/app/utils/extension.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class FindingDetailsWidget extends StatelessWidget {
   final UserModel user;
   final Function reload;
   final HomeController homeController = Get.find();
+
   FindingDetailsWidget({
     Key? key,
     required this.finding,
@@ -82,24 +84,37 @@ class FindingDetailsWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.share,
-                        color: Colors.black54,
+                        color: Colors.grey,
                       ),
                       Spacing.hLarge,
-                      Icon(
+                      const Icon(
                         Icons.save_alt,
-                        color: Colors.black54,
+                        color: Colors.grey,
                       ),
-                      if ((homeController.user.value.isAdmin )|| (user.uid == finding.createdByUid && finding.status != 1)) ...[
+                      if ((homeController.user.value.isAdmin && finding.status == 1)) ...[
+                        Spacing.hLarge,
+                        GestureDetector(
+                          onTap: () {
+                            HomeController.pinFinding(finding.id, reload, finding.pinned);
+                          },
+                          child: const Icon(
+                            Icons.add_chart_rounded,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                      if ((homeController.user.value.isAdmin) ||
+                          (user.uid == finding.createdByUid && finding.status != 1)) ...[
                         Spacing.hLarge,
                         GestureDetector(
                           onTap: () {
                             HomeController.deleteFindingDialog(finding.id, reload);
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.delete,
-                            color: Colors.black54,
+                            color: Colors.grey,
                           ),
                         ),
                       ]
@@ -119,7 +134,7 @@ class FindingDetailsWidget extends StatelessWidget {
               Spacing.vSmall,
               Center(
                 child: Text(
-                  finding.title,
+                  finding.title.toSentenceCase(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black87),
@@ -132,18 +147,22 @@ class FindingDetailsWidget extends StatelessWidget {
                     child: Container(
                       height: 30,
                       alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(87, 130, 243, 1.0),
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: Text(
-                        finding.equipmentTag.toUpperCase(),
-                        overflow: TextOverflow.clip,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          finding.equipmentTag.toUpperCase(),
+                          overflow: TextOverflow.clip,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -152,19 +171,23 @@ class FindingDetailsWidget extends StatelessWidget {
                   Expanded(
                     child: Container(
                       height: 30,
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: Colors.orangeAccent,
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: Text(
-                        finding.area,
-                        overflow: TextOverflow.clip,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          finding.area.toUpperCase(),
+                          overflow: TextOverflow.clip,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -173,19 +196,23 @@ class FindingDetailsWidget extends StatelessWidget {
                   Expanded(
                     child: Container(
                       height: 30,
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(3, 155, 16, 1.0),
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: Text(
-                        finding.category,
-                        overflow: TextOverflow.clip,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          finding.category.toUpperCase(),
+                          overflow: TextOverflow.clip,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -199,7 +226,7 @@ class FindingDetailsWidget extends StatelessWidget {
               ),
               Spacing.vStandard,
               Text(
-                finding.equipmentDescription,
+                finding.equipmentDescription.toSentenceCase(),
                 style: const TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black54),
               ),
@@ -210,7 +237,7 @@ class FindingDetailsWidget extends StatelessWidget {
               ),
               Spacing.vStandard,
               Text(
-                finding.problem,
+                finding.problem.toSentenceCase(),
                 style: const TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black54),
               ),
@@ -221,7 +248,7 @@ class FindingDetailsWidget extends StatelessWidget {
               ),
               Spacing.vStandard,
               Text(
-                finding.finding,
+                finding.finding.toSentenceCase(),
                 style: const TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black54),
               ),
@@ -232,7 +259,7 @@ class FindingDetailsWidget extends StatelessWidget {
               ),
               Spacing.vStandard,
               Text(
-                finding.solution,
+                finding.solution.toSentenceCase(),
                 style: const TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black54),
               ),
@@ -243,7 +270,7 @@ class FindingDetailsWidget extends StatelessWidget {
               ),
               Spacing.vStandard,
               Text(
-                finding.prevention,
+                finding.prevention.toSentenceCase(),
                 style: const TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black54),
               ),

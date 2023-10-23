@@ -33,7 +33,7 @@ class HomeController extends GetxController {
     } else if (newPasswordController.text.trim().length < 8) {
       CustomGetxWidgets.CustomSnackbar('Error', "Passwords length must be at least 8 characters!");
     } else {
-      Get.dialog(LoadingDialog(), barrierDismissible: false);
+      Get.dialog(const LoadingDialog(), barrierDismissible: false);
       try {
         AuthCredential credential = EmailAuthProvider.credential(
           email: this.user.value.email,
@@ -105,8 +105,50 @@ class HomeController extends GetxController {
     }
   }
 
+  static pinFinding(String id, Function reload, bool pinned) async {
+    Get.dialog(
+      SubmitDialog(
+        titleIcon: const Icon(Icons.add_chart, color: Colors.green, size: 100),
+        title: '${pinned ? "Unpin" : 'Pin'} finding',
+        description: 'This finding will be ${pinned ? "unpinned" : 'pinned'}!',
+        rightButtonText: pinned ? "Unpin" : 'Pin',
+        leftButtonText: 'Cancel',
+        rightButtonOnTap: () async {
+          Get.back();
+          Get.dialog(const LoadingDialog());
+          bool hasException = false;
+          try {
+            DocumentSnapshot<Map<String, dynamic>> finding =
+                await FirebaseFirestore.instance.collection('findings').doc(id).get();
+            if (finding.data() != null) {
+              FindingsModel findingsModel = FindingsModel.fromJson(finding.data()!);
+              await FirebaseFirestore.instance
+                  .collection('findings')
+                  .doc(id)
+                  .set({'pinned': !findingsModel.pinned}, SetOptions(merge: true));
+            }
+          } catch (e) {
+            print(e);
+            hasException = true;
+          } finally {
+            Get.back();
+            if (hasException) {
+              Get.back();
+              CustomGetxWidgets.CustomSnackbar('Error', 'Pleases try again!', color: Colors.red);
+            } else {
+              await reload();
+              CustomGetxWidgets.CustomSnackbar(
+                  'Success', 'Finding has been ${pinned ? "unpinned" : 'pinned'}');
+            }
+          }
+        },
+        leftButtonOnTap: () => Get.back(),
+      ),
+    );
+  }
+
   static deleteFinding(String id, Function reload) async {
-    Get.dialog(LoadingDialog());
+    Get.dialog(const LoadingDialog());
     bool hasException = false;
     try {
       DocumentSnapshot<Map<String, dynamic>> finding =
@@ -153,7 +195,7 @@ class HomeController extends GetxController {
   }
 
   logoutUser() async {
-    Get.dialog(LoadingDialog(), barrierDismissible: false);
+    Get.dialog(const LoadingDialog(), barrierDismissible: false);
     await FirebaseAuth.instance.signOut();
     Get.offAllNamed(Routes.SPLASH);
   }
@@ -170,7 +212,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getUserData() async {
-    Get.dialog(LoadingDialog(), barrierDismissible: false);
+    Get.dialog(const LoadingDialog(), barrierDismissible: false);
     try {
       var value = await FirebaseFirestore.instance
           .collection('users')

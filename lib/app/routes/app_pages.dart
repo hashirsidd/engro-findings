@@ -1,3 +1,4 @@
+import 'package:Findings/app/modules/searchFindings/views/search_result_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/createUsers/bindings/create_users_binding.dart';
@@ -48,6 +49,11 @@ class AppPages {
     GetPage(
       name: _Paths.SEARCH_FINDINGS,
       page: () => const SearchFindingsView(),
+      binding: SearchFindingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEARCH_RESULT_FINDINGS,
+      page: () => SearchResultFindingsView(),
       binding: SearchFindingsBinding(),
     ),
     GetPage(

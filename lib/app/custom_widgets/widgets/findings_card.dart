@@ -1,4 +1,5 @@
 import 'package:Findings/app/routes/app_pages.dart';
+import 'package:Findings/app/utils/extension.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,7 +63,7 @@ class FindingsCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  title,
+                  title.toSentenceCase(),
                   overflow: TextOverflow.clip,
                   maxLines: 1,
                   softWrap: false,
@@ -83,7 +84,7 @@ class FindingsCard extends StatelessWidget {
           ),
           Spacing.vStandard,
           Text(
-            description,
+            description.toSentenceCase(),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
@@ -97,18 +98,22 @@ class FindingsCard extends StatelessWidget {
                 child: Container(
                   height: 30,
                   alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(87, 130, 243, 1.0),
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: Text(
-                    tag.toUpperCase(),
-                    overflow: TextOverflow.clip,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      tag.toUpperCase(),
+                      overflow: TextOverflow.clip,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -117,19 +122,23 @@ class FindingsCard extends StatelessWidget {
               Expanded(
                 child: Container(
                   height: 30,
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Colors.orangeAccent,
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: Text(
-                    area,
-                    overflow: TextOverflow.clip,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      area.toUpperCase(),
+                      overflow: TextOverflow.clip,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -138,19 +147,23 @@ class FindingsCard extends StatelessWidget {
               Expanded(
                 child: Container(
                   height: 30,
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(3, 155, 16, 1.0),
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: Text(
-                    category,
-                    overflow: TextOverflow.clip,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      category.toUpperCase(),
+                      overflow: TextOverflow.clip,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

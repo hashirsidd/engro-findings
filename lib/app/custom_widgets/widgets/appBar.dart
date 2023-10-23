@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final Widget? action;
 
   const CustomAppBar({
     Key? key,
     required this.title,
+    this.action,
   }) : super(key: key);
 
   @override
@@ -29,6 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               fontWeight: FontWeight.w500,
             ),
       ),
+      actions: action != null ? [action!] : [],
       centerTitle: true,
     );
   }

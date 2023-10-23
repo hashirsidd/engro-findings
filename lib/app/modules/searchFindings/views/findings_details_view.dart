@@ -20,25 +20,6 @@ class FindingDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: Container(
-      //   padding: const EdgeInsets.all(14),
-      //   decoration: BoxDecoration(
-      //     boxShadow: const [
-      //       BoxShadow(
-      //         color: Colors.grey,
-      //         offset: Offset(0.0, 1.0),
-      //         blurRadius: 7.0,
-      //       ),
-      //     ],
-      //     color: Colors.green,
-      //     borderRadius: BorderRadius.circular(150),
-      //   ),
-      //   child: const Icon(
-      //     Icons.download,
-      //     color: Colors.white,
-      //     size: 31,
-      //   ),
-      // ),
       appBar: const CustomAppBar(
         title: 'FINDING',
       ),

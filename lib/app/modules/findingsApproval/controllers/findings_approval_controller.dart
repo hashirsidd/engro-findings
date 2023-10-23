@@ -5,6 +5,7 @@ import 'package:Findings/app/data/user_model.dart';
 import 'package:Findings/app/modules/findingsApproval/controllers/edit_finding_controller.dart';
 import 'package:Findings/app/modules/findingsApproval/views/Approve_reject_finding.dart';
 import 'package:Findings/app/modules/findingsApproval/views/edit_finding.dart';
+import 'package:Findings/app/utils/extension.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,7 +47,8 @@ class FindingsApprovalController extends GetxController {
           .update({'isApproved': 0});
       Get.back();
       Get.back();
-      await loadData();
+      unApprovedFindings.removeAt(index);
+      unApprovedFindings.refresh();
       CustomGetxWidgets.CustomSnackbar("Success", "Finding has been rejected!");
     } catch (e) {
       Get.back();
@@ -61,11 +63,12 @@ class FindingsApprovalController extends GetxController {
 
   onTapApprove(int index) async {
     try {
-      Get.dialog(LoadingDialog(), barrierDismissible: false);
-      await FirebaseFirestore.instance
-          .collection('findings')
-          .doc(findingsId[index])
-          .update({'isApproved': 1});
+      Get.dialog(LoadingDialog());
+      await FirebaseFirestore.instance.collection('findings').doc(findingsId[index]).update({
+        'isApproved': 1,
+        'titleList': unApprovedFindings[index].title.toListOfWords(),
+        'equipmentDescList': unApprovedFindings[index].equipmentDescription.toListOfWords(),
+      });
 
       await FirebaseFirestore.instance.collection('overview').doc('graph').set({
         "${unApprovedFindings[index].area.toLowerCase()} ${unApprovedFindings[index].category.toLowerCase()}":
@@ -74,7 +77,8 @@ class FindingsApprovalController extends GetxController {
 
       Get.back();
       Get.back();
-      await loadData();
+      unApprovedFindings.removeAt(index);
+      unApprovedFindings.refresh();
       CustomGetxWidgets.CustomSnackbar("Success", "Finding has been approved!");
     } catch (e) {
       Get.back();
@@ -165,6 +169,9 @@ class FindingsApprovalController extends GetxController {
       Get.back();
       CustomGetxWidgets.CustomSnackbar('Error', 'Unable to get findings,\nPlease try again!',
           color: Colors.red);
+    }
+    if (Get.isDialogOpen == true) {
+      Get.back();
     }
     isLoading.value = false;
   }

@@ -25,9 +25,10 @@ class DashboardController extends GetxController {
   RxList<FindingsModel> findings = <FindingsModel>[].obs;
   RxList<ChartData> chartData = <ChartData>[].obs;
 
+
   Future<UserModel?> getUserDetails(String uid) async {
     UserModel? user;
-    Get.dialog(LoadingDialog(), barrierDismissible: false);
+    Get.dialog(const LoadingDialog(), barrierDismissible: false);
     try {
       var value = await FirebaseFirestore.instance.collection('users').doc(uid).get();
       if (value.data() != null) {
@@ -63,21 +64,10 @@ class DashboardController extends GetxController {
     'amm\niii': [6, 0],
     'Work\nShop': [4, 4]
   };
-  RxInt max = 0.obs;
-
-  getMax() {
-    int _max = 0;
-    graph.forEach((key, value) {
-      _max = value[0] + value[1];
-      if (_max > max.value) {
-        max.value = _max;
-      }
-    });
-  }
 
   Future<void> loadData() async {
     try {
-      Get.dialog(LoadingDialog());
+      Get.dialog(const LoadingDialog());
       findings.clear();
       chartData.clear();
       QuerySnapshot<Map<String, dynamic>> findingsData = await FirebaseFirestore.instance
@@ -112,17 +102,20 @@ class DashboardController extends GetxController {
       findings.refresh();
       Get.back();
     } catch (e) {
+      print(e);
       Get.back();
       Get.back();
       CustomGetxWidgets.CustomSnackbar('Error', 'Unable to get findings,\nPlease try again!',
           color: Colors.red);
+    }
+    if (Get.isDialogOpen == true) {
+      Get.back();
     }
   }
 
   @override
   void onInit() {
     super.onInit();
-    getMax();
   }
 
   @override

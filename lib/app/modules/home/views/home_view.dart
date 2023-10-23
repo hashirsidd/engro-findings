@@ -338,7 +338,7 @@ class HomeView extends GetView<HomeController> {
                             padding: const EdgeInsets.symmetric(horizontal: 20.0),
                             child: GestureDetector(
                               onTap: () {
-                                Get.toNamed(Routes.SEARCH_FINDINGS);
+                                Get.toNamed(Routes.SEARCH_RESULT_FINDINGS);
                               },
                               child: AbsorbPointer(
                                 absorbing: true,

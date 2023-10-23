@@ -51,9 +51,9 @@ class FindingsModel {
 
   factory FindingsModel.fromJson(Map<String, dynamic> json) => FindingsModel(
         title: json["title"],
-        area: json["area"],
+        area: json["area"].toUpperCase(),
         date: json["date"],
-        category: json["category"],
+        category: json["category"].toUpperCase(),
         equipmentTag: json["equipmentTag"],
         equipmentDescription: json["equipmentDescription"],
         problem: json["problem"],

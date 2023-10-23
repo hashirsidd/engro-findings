@@ -1,11 +1,8 @@
-import 'package:Findings/app/modules/searchFindings/views/findings_details_view.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Findings/app/custom_widgets/widgets/appBar.dart';
 import 'package:Findings/app/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:Findings/app/custom_widgets/widgets/chart.dart';
-
 import 'package:Findings/app/custom_widgets/widgets/findings_card.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -130,7 +127,7 @@ class DashboardView extends GetView<DashboardController> {
                                 onTap: () => controller.onTapCard(i),
                                 child: FindingsCard(
                                   title: controller.findings[i].title,
-                                  description: controller.findings[i].problem,
+                                  description: controller.findings[i].equipmentDescription,
                                   tag: controller.findings[i].equipmentTag,
                                   category: controller.findings[i].category,
                                   area: controller.findings[i].area,
