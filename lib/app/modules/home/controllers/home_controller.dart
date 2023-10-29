@@ -1,6 +1,5 @@
 import 'package:Findings/app/custom_widgets/dialogs/loading_dialog.dart';
 import 'package:Findings/app/custom_widgets/widgets/customSnackbar.dart';
-import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/data/user_model.dart';
 import 'package:Findings/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../custom_widgets/dialogs/submit_dialog.dart';
+
 
 class HomeController extends GetxController {
   final TextEditingController searchController = TextEditingController();
@@ -105,94 +104,6 @@ class HomeController extends GetxController {
     }
   }
 
-  static pinFinding(String id, Function reload, bool pinned) async {
-    Get.dialog(
-      SubmitDialog(
-        titleIcon: const Icon(Icons.add_chart, color: Colors.green, size: 100),
-        title: '${pinned ? "Unpin" : 'Pin'} finding',
-        description: 'This finding will be ${pinned ? "unpinned" : 'pinned'}!',
-        rightButtonText: pinned ? "Unpin" : 'Pin',
-        leftButtonText: 'Cancel',
-        rightButtonOnTap: () async {
-          Get.back();
-          Get.dialog(const LoadingDialog());
-          bool hasException = false;
-          try {
-            DocumentSnapshot<Map<String, dynamic>> finding =
-                await FirebaseFirestore.instance.collection('findings').doc(id).get();
-            if (finding.data() != null) {
-              FindingsModel findingsModel = FindingsModel.fromJson(finding.data()!);
-              await FirebaseFirestore.instance
-                  .collection('findings')
-                  .doc(id)
-                  .set({'pinned': !findingsModel.pinned}, SetOptions(merge: true));
-            }
-          } catch (e) {
-            print(e);
-            hasException = true;
-          } finally {
-            Get.back();
-            if (hasException) {
-              Get.back();
-              CustomGetxWidgets.CustomSnackbar('Error', 'Pleases try again!', color: Colors.red);
-            } else {
-              await reload();
-              CustomGetxWidgets.CustomSnackbar(
-                  'Success', 'Finding has been ${pinned ? "unpinned" : 'pinned'}');
-            }
-          }
-        },
-        leftButtonOnTap: () => Get.back(),
-      ),
-    );
-  }
-
-  static deleteFinding(String id, Function reload) async {
-    Get.dialog(const LoadingDialog());
-    bool hasException = false;
-    try {
-      DocumentSnapshot<Map<String, dynamic>> finding =
-          await FirebaseFirestore.instance.collection('findings').doc(id).get();
-      if (finding.data() != null) {
-        FindingsModel findingsModel = FindingsModel.fromJson(finding.data()!);
-        await FirebaseFirestore.instance.collection('overview').doc('graph').set({
-          "${findingsModel.area.toLowerCase()} ${findingsModel.category.toLowerCase()}":
-              FieldValue.increment(-1)
-        }, SetOptions(merge: true));
-      }
-      await FirebaseFirestore.instance.collection('findings').doc(id).delete();
-    } catch (e) {
-      print(e);
-      hasException = true;
-    } finally {
-      Get.back();
-      if (hasException) {
-        CustomGetxWidgets.CustomSnackbar('Error', 'Pleases try again!', color: Colors.red);
-      } else {
-        await reload();
-        Get.back();
-        CustomGetxWidgets.CustomSnackbar('Success', 'Finding has been deleted');
-      }
-    }
-  }
-
-  static deleteFindingDialog(String id, Function reload) {
-    Get.dialog(
-      SubmitDialog(
-        titleIcon: const Icon(Icons.delete, color: Colors.red, size: 100),
-        title: 'Delete finding',
-        description: 'This finding will be deleted permanently!',
-        rightButtonText: 'Delete',
-        leftButtonText: 'Cancel',
-        rightButtonOnTap: () {
-          Get.back();
-          deleteFinding(id, reload);
-        },
-        leftButtonOnTap: () => Get.back(),
-        titleTextColor: Colors.red,
-      ),
-    );
-  }
 
   logoutUser() async {
     Get.dialog(const LoadingDialog(), barrierDismissible: false);

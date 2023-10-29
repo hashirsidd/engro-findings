@@ -3,6 +3,7 @@ import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/data/user_model.dart';
 import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 import 'package:Findings/app/utils/extension.dart';
+import 'package:Findings/app/utils/helper_functions.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -72,32 +73,44 @@ class FindingDetailsWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    finding.date,
-                    style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Text(
+                      finding.date,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic),
+                    ),
                   ),
                   Spacing.vStandard,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const Icon(
+                      GestureDetector(
+                        onTap: () {
+                          HelperFunctions.shareFinding(finding.id);
+                        },
+                        child: const Icon(
                         Icons.share,
                         color: Colors.grey,
-                      ),
+                      ),),
                       Spacing.hLarge,
-                      const Icon(
-                        Icons.save_alt,
-                        color: Colors.grey,
+                      GestureDetector(
+                        onTap: () {
+                          HelperFunctions.downloadFinding(finding.id);
+                        },
+                        child: const Icon(
+                          Icons.save_alt,
+                          color: Colors.grey,
+                        ),
                       ),
                       if ((homeController.user.value.isAdmin && finding.status == 1)) ...[
                         Spacing.hLarge,
                         GestureDetector(
                           onTap: () {
-                            HomeController.pinFinding(finding.id, reload, finding.pinned);
+                            HelperFunctions.pinFinding(finding.id, reload, finding.pinned);
                           },
                           child: const Icon(
                             Icons.add_chart_rounded,
@@ -110,7 +123,7 @@ class FindingDetailsWidget extends StatelessWidget {
                         Spacing.hLarge,
                         GestureDetector(
                           onTap: () {
-                            HomeController.deleteFindingDialog(finding.id, reload);
+                            HelperFunctions.deleteFindingDialog(finding.id, reload);
                           },
                           child: const Icon(
                             Icons.delete,
@@ -132,13 +145,17 @@ class FindingDetailsWidget extends StatelessWidget {
             shrinkWrap: true,
             children: [
               Spacing.vSmall,
-              Center(
-                child: Text(
-                  finding.title.toSentenceCase(),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black87),
-                ),
+              Column(
+                children: [
+                  Center(
+                    child: Text(
+                      finding.title.toSentenceCase(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black87),
+                    ),
+                  ),
+                ],
               ),
               Spacing.vExtraLarge,
               Row(

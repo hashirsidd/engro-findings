@@ -41,7 +41,6 @@ class FindingsController extends GetxController {
   HomeController homeController = Get.find();
 
   onPressSubmit() {}
-
   removeImage(int index) {
     images.removeAt(index);
   }

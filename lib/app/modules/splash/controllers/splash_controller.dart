@@ -17,6 +17,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
 
   navigateAfterSplash() {
     Future.delayed(const Duration(seconds: 5), () async {
+      await Permission.storage.request().isGranted;
       if (await isUserLoggedIn()) {
         Get.offAllNamed(Routes.HOME);
       } else {

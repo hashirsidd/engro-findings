@@ -1,4 +1,5 @@
 import 'package:Findings/app/custom_widgets/dialogs/change_password.dart';
+import 'package:Findings/app/utils/helper_functions.dart';
 import 'package:Findings/app/utils/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,165 +16,8 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: Drawer(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              color: Colors.green,
-              child: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Obx(() => Text(
-                            controller.user.value.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(color: Colors.white),
-                          )),
-                      Spacing.vStandard,
-                      Obx(() => Text(
-                            controller.user.value.email,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(color: Colors.white),
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Spacing.vStandard,
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Obx(
-                    () => controller.user.value.isAdmin
-                        ? GestureDetector(
-                            onTap: () {},
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Manage users',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(color: Colors.grey),
-                                ),
-                                const Spacer(),
-                                const Icon(
-                                  Icons.people,
-                                  color: Colors.grey,
-                                ),
-                                Spacing.hSize(18),
-                              ],
-                            ),
-                          )
-                        : const SizedBox(),
-                  ),
-                  Spacing.vLarge,
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                      controller.newPasswordController.clear();
-                      controller.oldPasswordController.clear();
-                      Get.dialog(ChangePasswordDialog(controller: controller));
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          'Change password',
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
-                        ),
-                        const Spacer(),
-                        const Icon(
-                          Icons.password,
-                          color: Colors.grey,
-                        ),
-                        Spacing.hSize(18),
-                      ],
-                    ),
-                  ),
-                  Spacing.vSize(12),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Notifications',
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
-                        ),
-                        Obx(() => Switch(
-                              value: controller.user.value.notifications,
-                              activeColor: Colors.green,
-                              onChanged: (bool value) {
-                                controller.user.value.notifications = value;
-                                controller.user.refresh();
-                                controller.changeNotificationStatus();
-                              },
-                            )),
-                      ],
-                    ),
-                  ),
-                  Spacing.vSize(12),
-                  GestureDetector(
-                    onTap: controller.logoutUser,
-                    child: Row(
-                      children: [
-                        Text(
-                          'Sign out',
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
-                        ),
-                        const Spacer(),
-                        const Icon(
-                          Icons.logout,
-                          color: Colors.grey,
-                        ),
-                        Spacing.hSize(18),
-                      ],
-                    ),
-                  ),
-                  Spacing.vLarge,
-                  const Divider(color: Colors.grey),
-                  Spacing.vLarge,
-                  Center(
-                    child: Text(
-                      'App Owner',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Colors.black54,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                  ),
-                  Spacing.vStandard,
-                  Center(
-                    child: Text(
-                      'M. Zain UL Abdeen\nAssistant Manager Maintenance\n03122606873',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: Colors.grey, fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+      endDrawer: home_drawer(
+        controller: controller,
       ),
       // Disable opening the end drawer with a swipe gesture.
       body: GestureDetector(
@@ -378,6 +222,196 @@ class HomeView extends GetView<HomeController> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class home_drawer extends StatelessWidget {
+  const home_drawer({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final HomeController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            color: Colors.green,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Obx(() => Text(
+                          controller.user.value.name,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                        )),
+                    Spacing.vStandard,
+                    Obx(() => Text(
+                          controller.user.value.email,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                        )),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Spacing.vStandard,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Obx(
+                  () => controller.user.value.isAdmin
+                      ? Column(
+                        children: [
+                          GestureDetector(
+                              onTap: () {},
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Manage users',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(color: Colors.grey),
+                                  ),
+                                  const Spacer(),
+                                  const Icon(
+                                    Icons.people,
+                                    color: Colors.grey,
+                                  ),
+                                  Spacing.hSize(18),
+                                ],
+                              ),
+                            ),
+                          Spacing.vLarge,
+                          GestureDetector(
+                            onTap: HelperFunctions.downloadAllData,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Download CSV',
+                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                                ),
+                                const Spacer(),
+                                const Icon(
+                                  Icons.save,
+                                  color: Colors.grey,
+                                ),
+                                Spacing.hSize(18),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                      : const SizedBox(),
+                ),
+
+                Spacing.vLarge,
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                    controller.newPasswordController.clear();
+                    controller.oldPasswordController.clear();
+                    Get.dialog(ChangePasswordDialog(controller: controller));
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        'Change password',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                      ),
+                      const Spacer(),
+                      const Icon(
+                        Icons.password,
+                        color: Colors.grey,
+                      ),
+                      Spacing.hSize(18),
+                    ],
+                  ),
+                ),
+                Spacing.vSize(12),
+                GestureDetector(
+                  onTap: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Notifications',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                      ),
+                      Obx(() => Switch(
+                            value: controller.user.value.notifications,
+                            activeColor: Colors.green,
+                            onChanged: (bool value) {
+                              controller.user.value.notifications = value;
+                              controller.user.refresh();
+                              controller.changeNotificationStatus();
+                            },
+                          )),
+                    ],
+                  ),
+                ),
+
+                Spacing.vSize(20),
+                GestureDetector(
+                  onTap: controller.logoutUser,
+                  child: Row(
+                    children: [
+                      Text(
+                        'Sign out',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                      ),
+                      const Spacer(),
+                      const Icon(
+                        Icons.logout,
+                        color: Colors.grey,
+                      ),
+                      Spacing.hSize(18),
+                    ],
+                  ),
+                ),
+                Spacing.vLarge,
+                const Divider(color: Colors.grey),
+                Spacing.vLarge,
+                Center(
+                  child: Text(
+                    'App Owner',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ),
+                Spacing.vStandard,
+                Center(
+                  child: Text(
+                    'M. Zain UL Abdeen\nAssistant Manager Maintenance\n03122606873',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.grey, fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

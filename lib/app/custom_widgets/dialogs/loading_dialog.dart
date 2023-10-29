@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:Findings/app/custom_widgets/widgets/underline_text_field.dart';
 
 class LoadingDialog extends StatelessWidget {
+
   const LoadingDialog({
     Key? key,
   }) : super(key: key);
