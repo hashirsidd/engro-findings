@@ -131,6 +131,10 @@ class HomeController extends GetxController {
           .get();
       if (value.data() != null) {
         user.value = UserModel.fromJson(value.data()!);
+        if(!user.value.isLoginAllowed){
+          logoutUser();
+          CustomGetxWidgets.CustomSnackbar("Error", "Your profile has been blocked!");
+        }
       } else {
         throw 'User not found';
       }
