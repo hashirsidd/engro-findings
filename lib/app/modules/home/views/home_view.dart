@@ -277,9 +277,12 @@ class home_drawer extends StatelessWidget {
                 Obx(
                   () => controller.user.value.isAdmin
                       ? Column(
-                        children: [
-                          GestureDetector(
-                              onTap: () {},
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Get.back();
+                                Get.toNamed(Routes.MANAGE_USERS);
+                              },
                               child: Row(
                                 children: [
                                   Text(
@@ -298,29 +301,31 @@ class home_drawer extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          Spacing.vLarge,
-                          GestureDetector(
-                            onTap: HelperFunctions.downloadAllData,
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Download CSV',
-                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
-                                ),
-                                const Spacer(),
-                                const Icon(
-                                  Icons.save,
-                                  color: Colors.grey,
-                                ),
-                                Spacing.hSize(18),
-                              ],
+                            Spacing.vLarge,
+                            GestureDetector(
+                              onTap: HelperFunctions.downloadAllData,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Download CSV',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(color: Colors.grey),
+                                  ),
+                                  const Spacer(),
+                                  const Icon(
+                                    Icons.save,
+                                    color: Colors.grey,
+                                  ),
+                                  Spacing.hSize(18),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      )
+                          ],
+                        )
                       : const SizedBox(),
                 ),
-
                 Spacing.vLarge,
                 GestureDetector(
                   onTap: () {
@@ -366,7 +371,6 @@ class home_drawer extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 Spacing.vSize(20),
                 GestureDetector(
                   onTap: controller.logoutUser,

@@ -1,4 +1,3 @@
-import 'package:Findings/app/modules/searchFindings/views/search_result_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/createUsers/bindings/create_users_binding.dart';
@@ -13,10 +12,13 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/manageUsers/bindings/manage_users_binding.dart';
+import '../modules/manageUsers/views/manage_users_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/searchFindings/bindings/search_findings_binding.dart';
 import '../modules/searchFindings/views/search_findings_view.dart';
+import '../modules/searchFindings/views/search_result_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/submittedFindings/bindings/submitted_findings_binding.dart';
@@ -90,6 +92,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANAGE_USERS,
+      page: () =>  ManageUsersView(),
+      binding: ManageUsersBinding(),
     ),
   ];
 }
