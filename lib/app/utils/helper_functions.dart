@@ -258,83 +258,108 @@ class HelperFunctions {
                     ),
                   ]),
                   pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 20),
-                    child: pw.Text(
-                      'Equipment Description',
-                      style: pw.TextStyle(
+                    padding: const pw.EdgeInsets.symmetric(vertical: 10),
+                    child: pw.RichText(
+                      text: pw.TextSpan(
+                        text: 'Equipment Description\n',
+                        style: pw.TextStyle(
                           fontSize: 18,
                           fontWeight: pw.FontWeight.bold,
-                          color: PdfColor.fromHex('#000000')),
-                    ),
-                  ),
-                  pw.Text(
-                    finding.equipmentDescription.toSentenceCase(),
-                    style: const pw.TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 20),
-                    child: pw.Text(
-                      'Problem Statement: What happened?',
-                      style: pw.TextStyle(
-                        fontSize: 18,
-                        fontWeight: pw.FontWeight.bold,
+                        ),
+                        children: [
+                          pw.TextSpan(
+                            text: finding.equipmentDescription.toSentenceCase(),
+                            style: pw.TextStyle(
+                              fontSize: 16,
+                              fontWeight: pw.FontWeight.normal,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  pw.Text(
-                    finding.problem.toSentenceCase(),
-                    style: const pw.TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
                   pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 20),
-                    child: pw.Text(
-                      'Key Findings: Why it happened?',
-                      style: pw.TextStyle(
-                        fontSize: 18,
-                        fontWeight: pw.FontWeight.bold,
+                    padding: const pw.EdgeInsets.symmetric(vertical: 10),
+                    child: pw.RichText(
+                      text: pw.TextSpan(
+                        text: 'Problem Statement: What happened?\n',
+                        style: pw.TextStyle(
+                          fontSize: 18,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                        children: [
+                          pw.TextSpan(
+                            text: finding.problem.toSentenceCase(),
+                            style: pw.TextStyle(
+                              fontSize: 16,
+                              fontWeight: pw.FontWeight.normal,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  pw.Text(
-                    finding.finding.toSentenceCase(),
-                    style: const pw.TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
                   pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 20),
-                    child: pw.Text(
-                      'Solution: How was it rectified?',
-                      style: pw.TextStyle(
-                        fontSize: 18,
-                        fontWeight: pw.FontWeight.bold,
+                    padding: const pw.EdgeInsets.symmetric(vertical: 10),
+                    child: pw.RichText(
+                      text: pw.TextSpan(
+                        text: 'Key Findings: Why it happened?\n',
+                        style: pw.TextStyle(
+                          fontSize: 18,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                        children: [
+                          pw.TextSpan(
+                            text: finding.finding.toSentenceCase(),
+                            style: pw.TextStyle(
+                              fontSize: 16,
+                              fontWeight: pw.FontWeight.normal,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  pw.Text(
-                    finding.solution.toSentenceCase(),
-                    style: const pw.TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
                   pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 20),
-                    child: pw.Text(
-                      'Prevention: How to avoid it in future?',
-                      style: pw.TextStyle(
-                        fontSize: 18,
-                        fontWeight: pw.FontWeight.bold,
+                    padding: const pw.EdgeInsets.symmetric(vertical: 10),
+                    child: pw.RichText(
+                      text: pw.TextSpan(
+                        text: 'Solution: How was it rectified?\n',
+                        style: pw.TextStyle(
+                          fontSize: 18,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                        children: [
+                          pw.TextSpan(
+                            text: finding.solution.toSentenceCase(),
+                            style: pw.TextStyle(
+                              fontSize: 16,
+                              fontWeight: pw.FontWeight.normal,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  pw.Text(
-                    finding.prevention.toSentenceCase(),
-                    style: const pw.TextStyle(
-                      fontSize: 16,
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(vertical: 10),
+                    child: pw.RichText(
+                      text: pw.TextSpan(
+                        text: 'Prevention: How to avoid it in future?\n',
+                        style: pw.TextStyle(
+                          fontSize: 18,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                        children: [
+                          pw.TextSpan(
+                            text: finding.prevention.toSentenceCase(),
+                            style: pw.TextStyle(
+                              fontSize: 16,
+                              fontWeight: pw.FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   pw.Padding(
