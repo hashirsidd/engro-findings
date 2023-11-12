@@ -31,7 +31,6 @@ class SearchResultFindingsView extends GetView<SearchResultController> {
               SearchBar(
                 controller: controller.searchController,
                 elevation: MaterialStateProperty.all(5),
-                focusNode: controller.searchFocus,
                 hintText: "Search findings",
                 hintStyle:
                     MaterialStateProperty.all<TextStyle>(const TextStyle(color: Colors.grey)),
@@ -124,7 +123,9 @@ class SearchResultFindingsView extends GetView<SearchResultController> {
                             ? DateTime.now()
                             : DateFormat('MM/dd/y').parse(controller.date.value),
                         firstDate: DateTime(2023, 8),
-                        lastDate: DateTime.now(),
+                        lastDate: controller.endDate.value != ''
+                            ? DateFormat('MM/dd/y').parse(controller.endDate.value)
+                            : DateTime.now(),
                         builder: (context, child) {
                           return Theme(
                             data: Theme.of(context).copyWith(
@@ -156,7 +157,7 @@ class SearchResultFindingsView extends GetView<SearchResultController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                controller.date.value == '' ? 'DD/MM/YYYY' : controller.date.value,
+                                controller.date.value == '' ? 'From' : controller.date.value,
                                 style: TextStyle(
                                     color:
                                         controller.date.value == '' ? Colors.grey : Colors.black87),
@@ -165,6 +166,64 @@ class SearchResultFindingsView extends GetView<SearchResultController> {
                               Icon(
                                 Icons.date_range_rounded,
                                 color: controller.date.value == '' ? Colors.grey : Colors.black87,
+                              )
+                            ],
+                          )),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      final DateTime? picked = await showDatePicker(
+                        context: context,
+                        initialDate: controller.endDate.value == ''
+                            ? DateTime.now()
+                            : DateFormat('MM/dd/y').parse(controller.endDate.value),
+                        firstDate: controller.date.value != ''
+                            ? DateFormat('MM/dd/y').parse(controller.date.value)
+                            : DateTime(2023, 8),
+                        lastDate: DateTime.now(),
+                        builder: (context, child) {
+                          return Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: const ColorScheme.light(
+                                primary: Colors.green,
+                                onPrimary: Colors.white,
+                                onSurface: Colors.black,
+                              ),
+                              dialogTheme: const DialogTheme(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(16),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
+                      );
+                      if (picked != null && picked != controller.endDate.value) {
+                        controller.endDate.value = DateFormat('MM/dd/y').format(picked).toString();
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 20),
+                      child: Obx(() => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                controller.endDate.value == '' ? 'To' : controller.endDate.value,
+                                style: TextStyle(
+                                    color: controller.endDate.value == ''
+                                        ? Colors.grey
+                                        : Colors.black87),
+                                textAlign: TextAlign.left,
+                              ),
+                              Icon(
+                                Icons.date_range_rounded,
+                                color:
+                                    controller.endDate.value == '' ? Colors.grey : Colors.black87,
                               )
                             ],
                           )),

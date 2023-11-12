@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:Findings/app/custom_widgets/widgets/customSnackbar.dart';
 import 'package:Findings/app/custom_widgets/widgets/findings_detail_view.dart';
 import 'package:Findings/app/utils/extension.dart';
@@ -9,6 +11,7 @@ import 'package:get/get.dart';
 import '../../../custom_widgets/dialogs/loading_dialog.dart';
 import '../../../data/findings_model.dart';
 import '../../../data/user_model.dart';
+import 'package:intl/intl.dart';
 
 class SearchResultController extends GetxController {
   FocusNode searchFocus = FocusNode();
@@ -18,6 +21,7 @@ class SearchResultController extends GetxController {
   RxString area = ''.obs;
   RxString category = ''.obs;
   RxString date = ''.obs;
+  RxString endDate = ''.obs;
   Map<String, dynamic> ids = {};
 
   ExpansionTileController expansionTileController = ExpansionTileController();
@@ -31,6 +35,7 @@ class SearchResultController extends GetxController {
         (searchController.text.trim().isNotEmpty ||
             area.value.isNotEmpty ||
             category.value.isNotEmpty ||
+            date.value.isNotEmpty ||
             date.value.isNotEmpty)) {
       FocusScope.of(context).requestFocus(FocusNode());
       isSearching.value = true;
@@ -57,11 +62,6 @@ class SearchResultController extends GetxController {
           collectionReference.where('category', isEqualTo: category.value),
         );
       }
-      if (date.value.isNotEmpty) {
-        queries.add(
-          collectionReference.where('date', isEqualTo: date.value),
-        );
-      }
 
       for (var query in queries) {
         try {
@@ -78,7 +78,42 @@ class SearchResultController extends GetxController {
               FindingsModel.fromJson(element.data() as Map<String, dynamic>);
           if (ids[findingsModel.id] == null) {
             ids[findingsModel.id] = '';
-            searchedFindings.add(findingsModel);
+            if (date.value == '' && endDate.value == '') {
+              searchedFindings.add(findingsModel);
+            } else if (date.value != '' && endDate.value == '') {
+              if (DateFormat('MM/dd/y')
+                      .parse(findingsModel.date)
+                      .isAtSameMomentAs(DateFormat('MM/dd/y').parse(date.value)) ||
+                  DateFormat('MM/dd/y')
+                      .parse(findingsModel.date)
+                      .isAfter(DateFormat('MM/dd/y').parse(date.value))) {
+                searchedFindings.add(findingsModel);
+              }
+            } else if (date.value == '' && endDate.value != '') {
+              if (DateFormat('MM/dd/y')
+                      .parse(findingsModel.date)
+                      .isAtSameMomentAs(DateFormat('MM/dd/y').parse(endDate.value)) ||
+                  DateFormat('MM/dd/y')
+                      .parse(findingsModel.date)
+                      .isBefore(DateFormat('MM/dd/y').parse(endDate.value))) {
+                searchedFindings.add(findingsModel);
+              }
+            } else if (date.value != '' && endDate.value != '') {
+              if ((DateFormat('MM/dd/y')
+                          .parse(findingsModel.date)
+                          .isAtSameMomentAs(DateFormat('MM/dd/y').parse(endDate.value)) ||
+                      DateFormat('MM/dd/y')
+                          .parse(findingsModel.date)
+                          .isBefore(DateFormat('MM/dd/y').parse(endDate.value))) &&
+                  (DateFormat('MM/dd/y')
+                          .parse(findingsModel.date)
+                          .isAtSameMomentAs(DateFormat('MM/dd/y').parse(date.value)) ||
+                      DateFormat('MM/dd/y')
+                          .parse(findingsModel.date)
+                          .isAfter(DateFormat('MM/dd/y').parse(date.value)))) {
+                searchedFindings.add(findingsModel);
+              }
+            }
           }
         });
       } catch (e) {
