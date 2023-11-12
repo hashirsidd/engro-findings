@@ -83,102 +83,48 @@ class HomeView extends GetView<HomeController> {
               ),
               Spacing.vSmall,
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Spacing.vSmall,
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Field Maintainance',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                          Text(
-                            'KEY AREA FINDINGS',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(fontWeight: FontWeight.w400, fontSize: 32),
-                          ),
-                          Text(
-                            'Share your learning with us!',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(fontSize: 16, color: Colors.black),
-                          ),
-                        ],
+                child: LiquidPullToRefresh(
+                  onRefresh: controller.reload,
+                  showChildOpacityTransition: false,
+                  color: Colors.transparent,
+                  backgroundColor: Colors.green,
+                  springAnimationDurationInMilliseconds: 500,
+                  animSpeedFactor: 2,
+                  height: 100,
+                  child: ListView(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    children: [
+                      Spacing.vSmall,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Field Maintainance',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            Text(
+                              'KEY AREA FINDINGS',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.w400, fontSize: 32),
+                            ),
+                            Text(
+                              'Share your learning with us!',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(fontSize: 16, color: Colors.black),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Spacing.vExtraLarge,
-                    Expanded(
-                      child: Stack(
+                      Spacing.vExtraLarge,
+                      Column(
                         children: [
-                          Column(
-                            children: [
-                              Spacing.vExtraLarge,
-                              Expanded(
-                                child: GridView.count(
-                                  padding: const EdgeInsets.only(
-                                      left: 20.0, right: 20, top: 50, bottom: 60),
-                                  shrinkWrap: true,
-                                  physics: const BouncingScrollPhysics(),
-                                  crossAxisCount: MediaQuery.of(context).size.width > 550 ? 4 : 2,
-                                  crossAxisSpacing: 20,
-                                  mainAxisSpacing: 20,
-                                  children: [
-                                    HomeTabs(
-                                      title: 'Overview\nDashboard',
-                                      assetPath: 'assets/dashboard.png',
-                                      onTap: () {
-                                        Get.toNamed(Routes.DASHBOARD);
-                                      },
-                                    ),
-                                    HomeTabs(
-                                      title: 'File Your\nFindings',
-                                      assetPath: 'assets/fileFindings.png',
-                                      onTap: () {
-                                        Get.toNamed(Routes.FILE_FINDINGS);
-                                      },
-                                    ),
-                                    HomeTabs(
-                                      title: 'Site Wide\nFindings',
-                                      assetPath: 'assets/siteSearch.png',
-                                      onTap: () {
-                                        Get.toNamed(Routes.SEARCH_FINDINGS);
-                                      },
-                                    ),
-                                    HomeTabs(
-                                      title: 'Submitted\nFindings',
-                                      assetPath: 'assets/yourFindings.png',
-                                      onTap: () => Get.toNamed(Routes.SUBMITTED_FINDINGS),
-                                    ),
-                                    Obx(
-                                      () => controller.user.value.isAdmin
-                                          ? HomeTabs(
-                                              title: 'Create\nUsers',
-                                              assetPath: 'assets/addUser.png',
-                                              onTap: () => Get.toNamed(Routes.CREATE_USERS),
-                                            )
-                                          : const SizedBox(),
-                                    ),
-                                    Obx(
-                                      () => controller.user.value.isAdmin
-                                          ? HomeTabs(
-                                              title: 'Findings\nApproval',
-                                              assetPath: 'assets/approvals.png',
-                                              onTap: () => Get.toNamed(Routes.FINDINGS_APPROVAL),
-                                            )
-                                          : const SizedBox(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20.0),
                             child: GestureDetector(
@@ -214,10 +160,65 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ),
                           ),
+                          GridView.count(
+                            padding:
+                                const EdgeInsets.only(left: 20.0, right: 20, top: 20, bottom: 60),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            crossAxisCount: MediaQuery.of(context).size.width > 550 ? 4 : 2,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20,
+                            children: [
+                              HomeTabs(
+                                title: 'Overview\nDashboard',
+                                assetPath: 'assets/dashboard.png',
+                                onTap: () {
+                                  Get.toNamed(Routes.DASHBOARD);
+                                },
+                              ),
+                              HomeTabs(
+                                title: 'File Your\nFindings',
+                                assetPath: 'assets/fileFindings.png',
+                                onTap: () {
+                                  Get.toNamed(Routes.FILE_FINDINGS);
+                                },
+                              ),
+                              HomeTabs(
+                                title: 'Site Wide\nFindings',
+                                assetPath: 'assets/siteSearch.png',
+                                onTap: () {
+                                  Get.toNamed(Routes.SEARCH_FINDINGS);
+                                },
+                              ),
+                              HomeTabs(
+                                title: 'Submitted\nFindings',
+                                assetPath: 'assets/yourFindings.png',
+                                onTap: () => Get.toNamed(Routes.SUBMITTED_FINDINGS),
+                              ),
+                              Obx(
+                                () => controller.user.value.isAdmin
+                                    ? HomeTabs(
+                                        title: 'Create\nUsers',
+                                        assetPath: 'assets/addUser.png',
+                                        onTap: () => Get.toNamed(Routes.CREATE_USERS),
+                                      )
+                                    : const SizedBox(),
+                              ),
+                              Obx(
+                                () => controller.user.value.isAdmin
+                                    ? HomeTabs(
+                                        title: 'Findings\nApproval',
+                                        assetPath: 'assets/approvals.png',
+                                        onTap: () => Get.toNamed(Routes.FINDINGS_APPROVAL),
+                                      )
+                                    : const SizedBox(),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -393,7 +394,6 @@ class home_drawer extends StatelessWidget {
                 Spacing.vLarge,
                 const Divider(color: Colors.grey),
                 Spacing.vLarge,
-
                 Center(
                   child: GestureDetector(
                     onTap: () {
@@ -413,10 +413,11 @@ class home_drawer extends StatelessWidget {
                         Text(
                           '03122606873',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: Color(0xff0070E0), fontWeight: FontWeight.w400,decoration: TextDecoration.underline,),
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Color(0xff0070E0),
+                                fontWeight: FontWeight.w400,
+                                decoration: TextDecoration.underline,
+                              ),
                         ),
                       ],
                     ),

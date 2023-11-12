@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:Findings/app/custom_widgets/dialogs/loading_dialog.dart';
 import 'package:Findings/app/custom_widgets/widgets/customSnackbar.dart';
 import 'package:Findings/app/data/user_model.dart';
@@ -37,22 +39,18 @@ class LoginController extends GetxController {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
         Get.back();
-        CustomGetxWidgets.CustomSnackbar(
-            'Success', 'Reset email has been sent to your account!');
+        CustomGetxWidgets.CustomSnackbar('Success', 'Reset email has been sent to your account!');
       } catch (e) {
         Get.back();
-        CustomGetxWidgets.CustomSnackbar("Error", 'Unexpected error occurred',
-            color: Colors.red);
+        CustomGetxWidgets.CustomSnackbar("Error", 'Unexpected error occurred', color: Colors.red);
       }
     } else {
-      CustomGetxWidgets.CustomSnackbar("Error", 'Invalid Email',
-          color: Colors.red);
+      CustomGetxWidgets.CustomSnackbar("Error", 'Invalid Email', color: Colors.red);
     }
   }
 
   void onPressLogin() async {
-    if (emailController.text.trim().isNotEmpty &&
-        passwordController.text.trim().isNotEmpty) {
+    if (emailController.text.trim().isNotEmpty && passwordController.text.trim().isNotEmpty) {
       login();
     } else {
       Get.snackbar(
@@ -64,12 +62,18 @@ class LoginController extends GetxController {
   }
 
   void login() async {
+    late Timer timeoutTimer;
     try {
       isLoading.value = true;
+      timeoutTimer = Timer(Duration(seconds: 15), () {
+        timeoutTimer.cancel();
+        throw 'Login operation timed out after 15 seconds';
+      });
       await _auth.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      timeoutTimer.cancel();
       isLoading.value = false;
       Get.offAllNamed('/home');
 

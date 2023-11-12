@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:Findings/app/custom_widgets/dialogs/loading_dialog.dart';
 import 'package:Findings/app/custom_widgets/widgets/customSnackbar.dart';
 import 'package:Findings/app/data/user_model.dart';
@@ -129,27 +131,41 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> loadUserDataFromFirebase() async {
+    var value = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser?.uid ?? "0")
+        .get();
+    if (value.data() != null) {
+      user.value = UserModel.fromJson(value.data()!);
+      if (!user.value.isLoginAllowed) {
+        logoutUser();
+        CustomGetxWidgets.CustomSnackbar("Error", "Your profile has been blocked!");
+      }
+      if (user.value.notifications) {
+        print('value.notifications');
+        await FirebaseMessaging.instance.subscribeToTopic('all');
+        if (user.value.isAdmin) await FirebaseMessaging.instance.subscribeToTopic('admin');
+      }
+    } else {
+      throw 'User not found';
+    }
+  }
+
+  Future reload() async {
+    try {
+      await loadUserDataFromFirebase();
+    } catch (e) {
+      print(e);
+      CustomGetxWidgets.CustomSnackbar("Error", "Unable to load data!");
+    }
+    return;
+  }
+
   Future<void> getUserData() async {
     Get.dialog(const LoadingDialog(), barrierDismissible: false);
     try {
-      var value = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser?.uid ?? "0")
-          .get();
-      if (value.data() != null) {
-        user.value = UserModel.fromJson(value.data()!);
-        if (!user.value.isLoginAllowed) {
-          logoutUser();
-          CustomGetxWidgets.CustomSnackbar("Error", "Your profile has been blocked!");
-        }
-        if (user.value.notifications) {
-          print('value.notifications');
-          await FirebaseMessaging.instance.subscribeToTopic('all');
-          if (user.value.isAdmin) await FirebaseMessaging.instance.subscribeToTopic('admin');
-        }
-      } else {
-        throw 'User not found';
-      }
+      await loadUserDataFromFirebase();
       Get.back();
     } catch (e) {
       print(e);
