@@ -31,11 +31,11 @@ class LocalNotificationService {
       android: initializationSettingsAndroid,
     );
 
-    await flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
-      onDidReceiveBackgroundNotificationResponse: backgroundSelectNotification,
-      onDidReceiveNotificationResponse: selectNotification,
-    );
+    // await flutterLocalNotificationsPlugin.initialize(
+    //   initializationSettings,
+    //   onDidReceiveBackgroundNotificationResponse: backgroundSelectNotification,
+    //   onDidReceiveNotificationResponse: selectNotification,
+    // );
   }
 
   void showNotificationAndroid(

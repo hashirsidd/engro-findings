@@ -49,27 +49,29 @@ class FindingDetailsWidget extends StatelessWidget {
                       ),
               ),
               Spacing.hStandard,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    user.name,
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.name,
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                      ),
                     ),
-                  ),
-                  Text(
-                    user.area,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black87,
+                    Text(
+                      user.area,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const Spacer(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -92,42 +94,52 @@ class FindingDetailsWidget extends StatelessWidget {
                         onTap: () {
                           HelperFunctions.shareFinding(finding.id);
                         },
-                        child: const Icon(
-                        Icons.share,
-                        color: Colors.grey,
-                      ),),
-                      Spacing.hLarge,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: const Icon(
+                            Icons.share,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           HelperFunctions.downloadFinding(finding.id);
                         },
-                        child: const Icon(
-                          Icons.save_alt,
-                          color: Colors.grey,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: const Icon(
+                            Icons.save_alt,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                       if ((homeController.user.value.isAdmin && finding.status == 1)) ...[
-                        Spacing.hLarge,
                         GestureDetector(
                           onTap: () {
                             HelperFunctions.pinFinding(finding.id, reload, finding.pinned);
                           },
-                          child: const Icon(
-                            Icons.add_chart_rounded,
-                            color: Colors.grey,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: const Icon(
+                              Icons.add_chart_rounded,
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                       ],
                       if ((homeController.user.value.isAdmin) ||
                           (user.uid == finding.createdByUid && finding.status != 1)) ...[
-                        Spacing.hLarge,
                         GestureDetector(
                           onTap: () {
                             HelperFunctions.deleteFindingDialog(finding.id, reload);
                           },
-                          child: const Icon(
-                            Icons.delete,
-                            color: Colors.grey,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: const Icon(
+                              Icons.delete,
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                       ]

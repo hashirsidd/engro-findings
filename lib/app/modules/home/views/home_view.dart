@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:Findings/app/routes/app_pages.dart';
 import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
@@ -392,24 +393,33 @@ class home_drawer extends StatelessWidget {
                 Spacing.vLarge,
                 const Divider(color: Colors.grey),
                 Spacing.vLarge,
+
                 Center(
-                  child: Text(
-                    'App Owner',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w600,
+                  child: GestureDetector(
+                    onTap: () {
+                      launchUrl(Uri(scheme: 'tel', path: '+923122606873'));
+                    },
+                    child: Column(
+                      children: [
+                        Text(
+                          'Help contact',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey, fontWeight: FontWeight.w400),
                         ),
-                  ),
-                ),
-                Spacing.vStandard,
-                Center(
-                  child: Text(
-                    'M. Zain UL Abdeen\nAssistant Manager Maintenance\n03122606873',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.grey, fontWeight: FontWeight.w400),
+                        SizedBox(height: 5),
+                        Text(
+                          '03122606873',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Color(0xff0070E0), fontWeight: FontWeight.w400,decoration: TextDecoration.underline,),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

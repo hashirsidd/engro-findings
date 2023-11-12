@@ -185,7 +185,7 @@ class FindingsCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ' ${status.name.toUpperCase()}',
+                  status.name == Status.inReview ? ' ${status.name.toUpperCase()}' : 'IN-REVIEW',
                   overflow: TextOverflow.clip,
                   maxLines: 1,
                   style: TextStyle(

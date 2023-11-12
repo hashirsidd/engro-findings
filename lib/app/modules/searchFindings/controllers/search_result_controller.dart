@@ -26,12 +26,13 @@ class SearchResultController extends GetxController {
     FocusScope.of(context).requestFocus(searchFocus);
   }
 
-  searchFinding() async {
+  searchFinding(BuildContext context) async {
     if (!(isSearching.value) &&
         (searchController.text.trim().isNotEmpty ||
             area.value.isNotEmpty ||
             category.value.isNotEmpty ||
             date.value.isNotEmpty)) {
+      FocusScope.of(context).requestFocus(FocusNode());
       isSearching.value = true;
       expansionTileController.collapse();
       searchedFindings.clear();
