@@ -5,6 +5,7 @@ import 'package:Findings/app/data/findings_model.dart';
 import 'package:Findings/app/modules/home/controllers/home_controller.dart';
 import 'package:Findings/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -174,8 +175,10 @@ class FileFindingsController extends FindingsController {
             .doc('newFindings')
             .set({'new': FieldValue.increment(1)});
         homeController.newFindings.value++;
+        await FirebaseMessaging.instance.subscribeToTopic(ref.id);
         Get.back();
         Get.until((route) => route.settings.name == Routes.HOME);
+
         Get.dialog(
           SubmitDialog(
             title: 'Thank you for\nyour submission!',

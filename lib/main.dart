@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:Findings/app/custom_widgets/dialogs/notification_dialog.dart';
 import 'package:Findings/app/utils/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,22 +62,29 @@ class LocalNotificationService {
 
 @pragma('vm:entry-point')
 Future backgroundSelectNotification(NotificationResponse payload) async {
-  print('backgroundSelectNotification ${payload.payload}');
-  //Handle notification tapped logic here
+  handleSelectNotification(payload.payload);
 }
 
 Future selectNotification(NotificationResponse payload) async {
-  print('selectNotification ${payload.payload}');
-  await OpenFilex.open(payload.payload);
+  handleSelectNotification(payload.payload);
+}
+
+handleSelectNotification(String? data) async {
+  if (data != null && data.contains('.pdf')) {
+    await OpenFilex.open(data);
+  } else {
+    Map notificationData = json.decode(data ?? '');
+    await Get.dialog(NotificationDialog(
+      title: notificationData['title'],
+      description: notificationData['description'],
+    ));
+  }
 }
 
 LocalNotificationService localNotificationService = LocalNotificationService();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  // ]);
   await _configureLocalTimeZone();
   await localNotificationService.init();
 
@@ -85,6 +95,10 @@ void main() async {
     persistenceEnabled: true,
     cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
   );
+  FirebaseMessaging.onBackgroundMessage(_handleMessage);
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    _handleMessage(message);
+  });
   runApp(
     GetMaterialApp(
         title: "Application",
@@ -100,12 +114,19 @@ void main() async {
   );
 }
 
+Future<void> _handleMessage(RemoteMessage message)async {
+  Map<String, dynamic> data = message.data;
+  localNotificationService.showNotificationAndroid(
+    title: data['title'],
+    value: data['description'],
+    channelId: 'finding_notification',
+    channelName: 'finding_notification',
+    notificationId: 0,
+    payload: json.encode(data),
+  );
+}
+
 Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('Asia/Karachi'));
 }
-
-///todo
-/// implement manage users
-/// add share finding option work on create pdf and download or share
-/// add download all

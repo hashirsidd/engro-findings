@@ -10,6 +10,12 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
   RxBool logoVisible = false.obs;
   late AnimationController animationController;
 
+  bool showDialog = false;
+  Map<String, dynamic> dialogData = {
+    'title': '',
+    'data': '',
+  };
+
   Future<bool> isUserLoggedIn() async {
     final user = FirebaseAuth.instance.currentUser;
     return user != null;

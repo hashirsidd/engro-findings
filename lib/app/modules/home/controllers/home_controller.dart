@@ -4,15 +4,16 @@ import 'package:Findings/app/data/user_model.dart';
 import 'package:Findings/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-
 
 class HomeController extends GetxController {
   final TextEditingController searchController = TextEditingController();
   Rx<UserModel> user = UserModel().obs;
   RxInt newFindings = 0.obs;
+
+  String shouldNavigateTo = '';
 
   FocusNode newPasswordFocus = FocusNode();
   FocusNode oldPasswordFocus = FocusNode();
@@ -20,6 +21,11 @@ class HomeController extends GetxController {
   TextEditingController oldPasswordController = TextEditingController();
 
   changeNotificationStatus() async {
+    if (user.value.notifications) {
+      await FirebaseMessaging.instance.subscribeToTopic('all');
+    } else {
+      await FirebaseMessaging.instance.unsubscribeFromTopic('all');
+    }
     await FirebaseFirestore.instance
         .collection('users')
         .doc(user.value.uid)
@@ -104,9 +110,10 @@ class HomeController extends GetxController {
     }
   }
 
-
   logoutUser() async {
     Get.dialog(const LoadingDialog(), barrierDismissible: false);
+    await FirebaseMessaging.instance.unsubscribeFromTopic('all');
+    await FirebaseMessaging.instance.unsubscribeFromTopic('admin');
     await FirebaseAuth.instance.signOut();
     Get.offAllNamed(Routes.SPLASH);
   }
@@ -131,9 +138,14 @@ class HomeController extends GetxController {
           .get();
       if (value.data() != null) {
         user.value = UserModel.fromJson(value.data()!);
-        if(!user.value.isLoginAllowed){
+        if (!user.value.isLoginAllowed) {
           logoutUser();
           CustomGetxWidgets.CustomSnackbar("Error", "Your profile has been blocked!");
+        }
+        if (user.value.notifications) {
+          print('value.notifications');
+          await FirebaseMessaging.instance.subscribeToTopic('all');
+          if (user.value.isAdmin) await FirebaseMessaging.instance.subscribeToTopic('admin');
         }
       } else {
         throw 'User not found';
@@ -141,6 +153,8 @@ class HomeController extends GetxController {
       Get.back();
     } catch (e) {
       print(e);
+      await FirebaseMessaging.instance.unsubscribeFromTopic('all');
+      await FirebaseMessaging.instance.unsubscribeFromTopic('admin');
       await FirebaseAuth.instance.signOut();
       Get.back();
       Get.offAllNamed(Routes.SPLASH);
