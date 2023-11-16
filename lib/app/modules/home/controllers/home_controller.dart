@@ -169,10 +169,10 @@ class HomeController extends GetxController {
       Get.back();
     } catch (e) {
       print(e);
+      Get.back();
       await FirebaseMessaging.instance.unsubscribeFromTopic('all');
       await FirebaseMessaging.instance.unsubscribeFromTopic('admin');
       await FirebaseAuth.instance.signOut();
-      Get.back();
       Get.offAllNamed(Routes.SPLASH);
       CustomGetxWidgets.CustomSnackbar("Error", "Unable to get user data!");
     }

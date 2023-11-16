@@ -240,192 +240,207 @@ class home_drawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            color: Colors.green,
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Obx(() => Text(
-                          controller.user.value.name,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
-                        )),
-                    Spacing.vStandard,
-                    Obx(() => Text(
-                          controller.user.value.email,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
-                        )),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Spacing.vStandard,
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Obx(
-                  () => controller.user.value.isAdmin
-                      ? Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.back();
-                                Get.toNamed(Routes.MANAGE_USERS);
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Manage users',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(color: Colors.grey),
-                                  ),
-                                  const Spacer(),
-                                  const Icon(
-                                    Icons.people,
-                                    color: Colors.grey,
-                                  ),
-                                  Spacing.hSize(18),
-                                ],
-                              ),
-                            ),
-                            Spacing.vLarge,
-                            GestureDetector(
-                              onTap: HelperFunctions.downloadAllData,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Download CSV',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(color: Colors.grey),
-                                  ),
-                                  const Spacer(),
-                                  const Icon(
-                                    Icons.save,
-                                    color: Colors.grey,
-                                  ),
-                                  Spacing.hSize(18),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      : const SizedBox(),
-                ),
-                Spacing.vLarge,
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                    controller.newPasswordController.clear();
-                    controller.oldPasswordController.clear();
-                    Get.dialog(ChangePasswordDialog(controller: controller));
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                        'Change password',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
-                      ),
-                      const Spacer(),
-                      const Icon(
-                        Icons.password,
-                        color: Colors.grey,
-                      ),
-                      Spacing.hSize(18),
-                    ],
-                  ),
-                ),
-                Spacing.vSize(12),
-                GestureDetector(
-                  onTap: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Notifications',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
-                      ),
-                      Obx(() => Switch(
-                            value: controller.user.value.notifications,
-                            activeColor: Colors.green,
-                            onChanged: (bool value) {
-                              controller.user.value.notifications = value;
-                              controller.user.refresh();
-                              controller.changeNotificationStatus();
-                            },
-                          )),
-                    ],
-                  ),
-                ),
-                Spacing.vSize(20),
-                GestureDetector(
-                  onTap: controller.logoutUser,
-                  child: Row(
-                    children: [
-                      Text(
-                        'Sign out',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
-                      ),
-                      const Spacer(),
-                      const Icon(
-                        Icons.logout,
-                        color: Colors.grey,
-                      ),
-                      Spacing.hSize(18),
-                    ],
-                  ),
-                ),
-                Spacing.vLarge,
-                const Divider(color: Colors.grey),
-                Spacing.vLarge,
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      launchUrl(Uri(scheme: 'tel', path: '+923122606873'));
-                    },
+      child:Stack(
+        alignment: Alignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                color: Colors.green,
+                child: SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Help contact',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: Colors.grey, fontWeight: FontWeight.w400),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '03122606873',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Color(0xff0070E0),
-                                fontWeight: FontWeight.w400,
-                                decoration: TextDecoration.underline,
-                              ),
-                        ),
+                        Obx(() => Text(
+                              controller.user.value.name,
+                              style:
+                                  Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                            )),
+                        Spacing.vStandard,
+                        Obx(() => Text(
+                              controller.user.value.email,
+                              style:
+                                  Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                            )),
                       ],
                     ),
                   ),
                 ),
-              ],
+              ),
+              Spacing.vStandard,
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Obx(
+                      () => controller.user.value.isAdmin
+                          ? Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.back();
+                                    Get.toNamed(Routes.MANAGE_USERS);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Manage users',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(color: Colors.grey),
+                                      ),
+                                      const Spacer(),
+                                      const Icon(
+                                        Icons.people,
+                                        color: Colors.grey,
+                                      ),
+                                      Spacing.hSize(18),
+                                    ],
+                                  ),
+                                ),
+                                Spacing.vLarge,
+                                GestureDetector(
+                                  onTap: HelperFunctions.downloadAllData,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Download CSV',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(color: Colors.grey),
+                                      ),
+                                      const Spacer(),
+                                      const Icon(
+                                        Icons.save,
+                                        color: Colors.grey,
+                                      ),
+                                      Spacing.hSize(18),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
+                    ),
+                    Spacing.vLarge,
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                        controller.newPasswordController.clear();
+                        controller.oldPasswordController.clear();
+                        Get.dialog(ChangePasswordDialog(controller: controller));
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            'Change password',
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                          ),
+                          const Spacer(),
+                          const Icon(
+                            Icons.password,
+                            color: Colors.grey,
+                          ),
+                          Spacing.hSize(18),
+                        ],
+                      ),
+                    ),
+                    Spacing.vSize(12),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Notifications',
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                          ),
+                          Obx(() => Switch(
+                                value: controller.user.value.notifications,
+                                activeColor: Colors.green,
+                                onChanged: (bool value) {
+                                  controller.user.value.notifications = value;
+                                  controller.user.refresh();
+                                  controller.changeNotificationStatus();
+                                },
+                              )),
+                        ],
+                      ),
+                    ),
+                    Spacing.vSize(20),
+                    GestureDetector(
+                      onTap: controller.logoutUser,
+                      child: Row(
+                        children: [
+                          Text(
+                            'Sign out',
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                          ),
+                          const Spacer(),
+                          const Icon(
+                            Icons.logout,
+                            color: Colors.grey,
+                          ),
+                          Spacing.hSize(18),
+                        ],
+                      ),
+                    ),
+                    Spacing.vLarge,
+                    const Divider(color: Colors.grey),
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            bottom: 50,
+            child: GestureDetector(
+              onTap: () {
+                launchUrl(Uri(scheme: 'tel', path: '+923122606873'));
+              },
+              child: Column(
+                children: [
+                  Text(
+                    'Help contact',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.grey,fontSize: 18, fontWeight: FontWeight.w400),
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    children: [
+                     Icon(Icons.call,),
+                      SizedBox(width: 10,),
+                      Text(
+                        '03122606873',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Color(0xff0070E0),
+                          fontWeight: FontWeight.w400,
+                          decoration: TextDecoration.underline,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
+
         ],
       ),
     );
@@ -469,19 +484,30 @@ class HomeTabs extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style:
-                  const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w300),
-            ),
-            Row(
-              children: [
-                const Spacer(),
-                Image.asset(
-                  assetPath,
-                  height: 60,
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  title,
+                  style:
+                      const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w300),
                 ),
-              ],
+              ),
+            ),
+            SizedBox(height: 20,),
+            Expanded(
+              child: Row(
+                children: [
+                  const Spacer(),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: 60),
+                    child: Image.asset(
+                      assetPath,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),
