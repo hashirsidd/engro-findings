@@ -539,14 +539,22 @@ class HelperFunctions {
     try {
       DocumentSnapshot<Map<String, dynamic>> finding =
           await FirebaseFirestore.instance.collection('findings').doc(id).get();
+
+      await FirebaseFirestore.instance.collection('findings').doc(id).delete();
       if (finding.data() != null) {
         FindingsModel findingsModel = FindingsModel.fromJson(finding.data()!);
-        await FirebaseFirestore.instance.collection('overview').doc('graph').set({
-          "${findingsModel.area.toLowerCase()} ${findingsModel.category.toLowerCase()}":
-              FieldValue.increment(-1)
-        }, SetOptions(merge: true));
+        DocumentSnapshot<Map<String, dynamic>> graphData =
+            await FirebaseFirestore.instance.collection('overview').doc('graph').get();
+        if (graphData.data() != null &&
+            graphData.data()![
+                    "${findingsModel.area.toLowerCase()} ${findingsModel.category.toLowerCase()}"] >
+                0) {
+          await FirebaseFirestore.instance.collection('overview').doc('graph').set({
+            "${findingsModel.area.toLowerCase()} ${findingsModel.category.toLowerCase()}":
+                FieldValue.increment(-1)
+          }, SetOptions(merge: true));
+        }
       }
-      await FirebaseFirestore.instance.collection('findings').doc(id).delete();
     } catch (e) {
       print(e);
       hasException = true;

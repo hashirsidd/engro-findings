@@ -71,11 +71,15 @@ class DashboardView extends GetView<DashboardController> {
                   ),
                   height: 350,
                   child: Obx(() => SfCartesianChart(
+                          plotAreaBorderWidth: 0,
+                          primaryYAxis: CategoryAxis(
+                            isVisible: false,
+                          ),
                           primaryXAxis: CategoryAxis(
                               labelsExtent: 100,
                               labelAlignment: LabelAlignment.center,
                               labelRotation: 0,
-                              labelIntersectAction: AxisLabelIntersectAction.multipleRows,
+                              labelIntersectAction: AxisLabelIntersectAction.wrap,
                               majorGridLines: MajorGridLines(width: 0)),
                           series: <ChartSeries>[
                             StackedColumnSeries<ChartData, String>(

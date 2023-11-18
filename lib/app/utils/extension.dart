@@ -15,6 +15,11 @@ extension StringToListOfChars on String {
 
 extension StringToListOfWords on String {
   List<String> toListOfWords() {
-    return this.split(RegExp(r'\s+'));
+    String word = this.toLowerCase();
+    // Use the regular expression to split the string with whitespace , or -
+    List<String> words = word.toLowerCase().split(RegExp(r'(\s+|-+|,+|\.+|!+|\?+|_+)')).toSet().toList();
+
+    words.removeWhere((element) => element.trim().isEmpty);
+    return words;
   }
 }
