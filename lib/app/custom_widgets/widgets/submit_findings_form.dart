@@ -51,10 +51,11 @@ class SubmitFindingsForm extends StatelessWidget {
                 onTap: () async {
                   final DateTime? picked = await showDatePicker(
                     context: context,
+                    initialEntryMode: DatePickerEntryMode.calendarOnly,
                     initialDate: controller.date.value == ''
                         ? DateTime.now()
                         : DateFormat('MM/dd/y').parse(controller.date.value),
-                    firstDate: DateTime(2023, 8),
+                    firstDate: DateTime(1900, 1),
                     lastDate: DateTime.now(),
                     builder: (context, child) {
                       return Theme(
