@@ -68,8 +68,8 @@ class DashboardController extends GetxController {
   Future<void> loadData() async {
     try {
       Get.dialog(const LoadingDialog());
-      findings.clear();
-      chartData.clear();
+
+
       QuerySnapshot<Map<String, dynamic>> findingsData = await FirebaseFirestore.instance
           .collection('findings')
           .where('isApproved', isEqualTo: 1)
@@ -77,6 +77,7 @@ class DashboardController extends GetxController {
           .limit(5)
           .get();
       if (findingsData.docs.isNotEmpty) {
+        findings.clear();
         findingsData.docs.forEach((element) {
           findings.add(FindingsModel.fromJson(element.data()));
         });
@@ -84,6 +85,7 @@ class DashboardController extends GetxController {
       DocumentSnapshot<Map<String, dynamic>> overview =
           await FirebaseFirestore.instance.collection('overview').doc('graph').get();
       if (overview.data() != null) {
+        chartData.clear();
         chartData.add(ChartData(
             'PM&S', overview.data()!["pm&s stationary"], overview.data()!["pm&s machinery"]));
         chartData.add(ChartData(

@@ -231,24 +231,58 @@ class SearchResultFindingsView extends GetView<SearchResultController> {
                           )),
                     ),
                   ),
-                  SizedBox(
-                    height: 40,
-                    child: ElevatedButton(
-                      onPressed: controller.onTapClearFilters,
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: () => controller.searchFinding(context),
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              'Search',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
-                      child: Text(
-                        'Clear Filters',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                      Spacing.hStandard,
+                      Expanded(
+                        child: SizedBox(
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: controller.onTapClearFilters,
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              'Clear Filters',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                   Spacing.vLarge
                 ],

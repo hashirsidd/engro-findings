@@ -10,7 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:intl/intl.dart';
 import 'package:Findings/app/custom_widgets/dialogs/submit_dialog.dart';
 
 class FindingsController extends GetxController {
@@ -162,7 +162,7 @@ class FileFindingsController extends FindingsController {
         status: 2,
         createdByEmail: homeController.user.value.email,
         createdByUid: homeController.user.value.uid,
-        timeStamp: FieldValue.serverTimestamp(),
+        timeStamp: DateFormat('MM/dd/y').parse(date.value).millisecondsSinceEpoch,
         areaGl: areaGlController.text.trim(),
         id: ref.id,
         pinned: false,

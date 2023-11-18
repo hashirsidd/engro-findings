@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../../routes/app_pages.dart';
+import 'package:intl/intl.dart';
 
 class EditFindingsController extends FindingsController {
   int findingIndex = 0;
@@ -62,7 +63,7 @@ class EditFindingsController extends FindingsController {
         status: 2,
         createdByEmail: homeController.user.value.email,
         createdByUid: homeController.user.value.uid,
-        timeStamp: FieldValue.serverTimestamp(),
+        timeStamp: DateFormat('MM/dd/y').parse(date.value).millisecondsSinceEpoch,
         areaGl: areaGlController.text.trim(),
         id: '',
         pinned: false,

@@ -36,7 +36,7 @@ class SearchResultController extends GetxController {
             area.value.isNotEmpty ||
             category.value.isNotEmpty ||
             date.value.isNotEmpty ||
-            date.value.isNotEmpty)) {
+            endDate.value.isNotEmpty)) {
       FocusScope.of(context).requestFocus(FocusNode());
       isSearching.value = true;
       expansionTileController.collapse();
@@ -47,11 +47,14 @@ class SearchResultController extends GetxController {
 
       List<DocumentSnapshot> results = [];
 
-      List<Query> queries = [
-        collectionReference.where('titleList', arrayContainsAny: input.toListOfWords()),
-        collectionReference.where('equipmentTag', isEqualTo: input),
-        collectionReference.where('equipmentDescList', arrayContainsAny: input.toListOfWords()),
-      ];
+      List<Query> queries = [];
+      if (input.isNotEmpty) {
+        queries.addAll([
+          collectionReference.where('titleList', arrayContainsAny: input.toListOfWords()),
+          collectionReference.where('equipmentTag', isEqualTo: input),
+          collectionReference.where('equipmentDescList', arrayContainsAny: input.toListOfWords()),
+        ]);
+      }
       if (area.value.isNotEmpty) {
         queries.add(
           collectionReference.where('area', isEqualTo: area.value),
@@ -63,9 +66,18 @@ class SearchResultController extends GetxController {
         );
       }
 
-      for (var query in queries) {
+      if (queries.isNotEmpty) {
+        for (var query in queries) {
+          try {
+            QuerySnapshot querySnapshot = await query.get();
+            results.addAll(querySnapshot.docs);
+          } catch (e) {
+            print("Error executing query: $e");
+          }
+        }
+      } else {
         try {
-          QuerySnapshot querySnapshot = await query.get();
+          QuerySnapshot querySnapshot = await collectionReference.get();
           results.addAll(querySnapshot.docs);
         } catch (e) {
           print("Error executing query: $e");
@@ -127,6 +139,7 @@ class SearchResultController extends GetxController {
     area.value = '';
     category.value = '';
     date.value = '';
+    endDate.value = '';
   }
 
   Future<UserModel?> getUserDetails(String uid) async {
